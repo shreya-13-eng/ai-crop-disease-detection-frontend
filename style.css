@@ -1,0 +1,156 @@
+
+       :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --light-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .home-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            border: none;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-card {
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .upload-area {
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary-color);
+            background-color: var(--light-green);
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+        
+        .disease-badge {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .treatment-card {
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .organic-badge {
+            background-color: #e8f5e9;
+            color: var(--dark-green);
+        }
+        
+        .chemical-badge {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .prevention-badge {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .severity-indicator {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            overflow: hidden;
+        }
+        
+        .severity-bar {
+            height: 100%;
+            border-radius: 5px;
+        }
+        
+        .severity-low {
+            background-color: #4caf50;
+            width: 30%;
+        }
+        
+        .severity-medium {
+            background-color: #ff9800;
+            width: 60%;
+        }
+        
+        .severity-high {
+            background-color: #f44336;
+            width: 90%;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+        
+        .history-item {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: var(--dark-green);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .home-section {
+                padding: 60px 0;
+            }
+            
+            .display-4 {
+                font-size: 2rem;
+            }
+        }

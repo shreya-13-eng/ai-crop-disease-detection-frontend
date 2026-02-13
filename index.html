@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriScan AI - Crop Disease Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-tree-fill me-2"></i>AgriScan AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scan">Scan Disease</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#history">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light ms-lg-3 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="bi bi-person-circle me-1"></i> Farmer Login
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">AI-Powered Crop Disease Detection</h1>
+            <p class="lead mb-4">Take a photo of your crop, detect diseases instantly, and get recommended treatments to minimize crop damage.</p>
+            <a href="#scan" class="btn btn-success btn-lg px-4">
+                <i class="bi bi-camera me-2"></i> Scan Your Crop Now
+            </a>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-md-8 mx-auto">
+                    <h2 class="fw-bold mb-3">How AgriScan AI Works</h2>
+                    <p class="text-muted">Three simple steps to protect your crops</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card step-card h-100 text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-camera"></i>
+                        </div>
+                        <h4>1. Capture Photo</h4>
+                        <p>Take a clear photo of the affected plant part (leaf, stem, fruit) using your smartphone camera.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card step-card h-100 text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-cpu"></i>
+                        </div>
+                        <h4>2. AI Detection</h4>
+                        <p>Our advanced AI analyzes the image and identifies the disease with 95% accuracy in seconds.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card step-card h-100 text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-prescription2"></i>
+                        </div>
+                        <h4>3. Get Treatment</h4>
+                        <p>Receive tailored treatment recommendations including organic solutions, pesticides, and prevention tips.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disease Scanner -->
+    <section id="scan" class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-8 mx-auto text-center">
+                    <h2 class="fw-bold mb-3">Crop Disease Scanner</h2>
+                    <p class="text-muted">Upload a photo of your crop to detect diseases and get treatment recommendations</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card p-4 h-100">
+                        <h4 class="mb-4">Upload Crop Image</h4>
+                        
+                        <div id="uploadArea" class="upload-area mb-4">
+                            <i class="bi bi-cloud-arrow-up display-4 text-muted mb-3"></i>
+                            <h5>Drag & Drop or Click to Upload</h5>
+                            <p class="text-muted">Supported formats: JPG, PNG, WebP</p>
+                            <input type="file" id="imageInput" accept="image/*" class="d-none">
+                            <button id="uploadBtn" class="btn btn-success mt-2">
+                                <i class="bi bi-upload me-2"></i> Select Image
+                            </button>
+                        </div>
+                        
+                        <div id="imagePreview" class="text-center mb-4 d-none">
+                            <img id="previewImg" class="preview-image mb-3" src="" alt="Preview">
+                            <button id="removeImage" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash me-1"></i> Remove Image
+                            </button>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="cropType" class="form-label">Crop Type</label>
+                            <select class="form-select" id="cropType">
+                                <option value="">Select Crop Type</option>
+                                <option value="tomato">Tomato</option>
+                                <option value="potato">Potato</option>
+                                <option value="rice">Rice</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="corn">Corn</option>
+                                <option value="apple">Apple</option>
+                                <option value="grape">Grape</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="growthStage" class="form-label">Growth Stage</label>
+                            <select class="form-select" id="growthStage">
+                                <option value="">Select Growth Stage</option>
+                                <option value="seedling">Seedling</option>
+                                <option value="vegetative">Vegetative</option>
+                                <option value="flowering">Flowering</option>
+                                <option value="fruiting">Fruiting</option>
+                                <option value="mature">Mature</option>
+                            </select>
+                        </div>
+                        
+                        <button id="scanBtn" class="btn btn-success w-100 py-3" disabled>
+                            <i class="bi bi-search me-2"></i> Scan for Diseases
+                            <span id="scanningSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div id="resultsSection" class="d-none">
+                        <div class="card p-4 mb-4">
+                            <h4 class="mb-4">Detection Results</h4>
+                            
+                            <div class="mb-4">
+                                <h5 id="diseaseName" class="text-success">Tomato Late Blight</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-3">Confidence:</span>
+                                    <div class="progress flex-grow-1">
+                                        <div id="confidenceBar" class="progress-bar" role="progressbar" style="width: 94%">94%</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <span class="me-3">Severity:</span>
+                                    <div class="severity-indicator d-inline-block" style="width: 200px;">
+                                        <div id="severityBar" class="severity-bar severity-medium"></div>
+                                    </div>
+                                    <span id="severityText" class="ms-2">Medium</span>
+                                </div>
+                                
+                                <p id="diseaseDescription" class="text-muted">
+                                    Late blight is a serious fungal disease that affects tomatoes and potatoes. It spreads rapidly in cool, wet conditions and can destroy entire crops if not treated promptly.
+                                </p>
+                            </div>
+                            
+                            <div class="alert alert-warning">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <strong>Important:</strong> This is an AI-based diagnosis. For critical infections, consult with local agricultural experts for confirmation.
+                            </div>
+                        </div>
+                        
+                        <div class="card treatment-card p-4">
+                            <h4 class="mb-4">Recommended Treatments</h4>
+                            
+                            <div class="mb-4">
+                                <h6><span class="badge chemical-badge me-2">Chemical</span> Fungicide Application</h6>
+                                <p>Apply copper-based fungicide (e.g., copper oxychloride) at 2g per liter of water. Spray every 7-10 days until conditions dry.</p>
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply immediately, reapply after rain</small>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h6><span class="badge organic-badge me-2">Organic Solution</span> Baking Soda Spray</h6>
+                                <p>Mix 1 tablespoon baking soda, 1 teaspoon vegetable oil, and a few drops of dish soap in 1 liter of water. Spray on affected plants.</p>
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply every 5-7 days</small>
+                            </div>
+                            
+                            <div>
+                                <h6><span class="badge prevention-badge me-2">Prevention</span> Cultural Practices</h6>
+                                <ul>
+                                    <li>Ensure proper spacing between plants for air circulation</li>
+                                    <li>Water at the base, avoid wetting leaves</li>
+                                    <li>Remove and destroy infected plant parts</li>
+                                    <li>Rotate crops next season</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <button class="btn btn-outline-success me-2">
+                                    <i class="bi bi-download me-1"></i> Save Report
+                                </button>
+                                <button class="btn btn-success">
+                                    <i class="bi bi-geo-alt me-1"></i> Find Suppliers Nearby
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="instructionsSection" class="card p-4">
+                        <h4 class="mb-3">Tips for Best Results</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take photo in good natural light</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Focus on affected leaves/stems/fruits</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Include both healthy and diseased parts if possible</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take multiple photos from different angles</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Avoid blurry or shadowed images</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scan History -->
+    <section id="history" class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-8 mx-auto text-center">
+                    <h2 class="fw-bold mb-3">Previous Scans</h2>
+                    <p class="text-muted">View your crop disease detection history</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-4">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Crop</th>
+                                        <th>Disease Detected</th>
+                                        <th>Severity</th>
+                                        <th>Treatment Applied</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTable">
+                                    <tr>
+                                        <td>May 15, 2023</td>
+                                        <td>Tomato</td>
+                                        <td>Early Blight</td>
+                                        <td>
+                                            <div class="severity-indicator" style="width: 100px;">
+                                                <div class="severity-bar severity-low"></div>
+                                            </div>
+                                        </td>
+                                        <td>Copper Fungicide</td>
+                                        <td><span class="badge bg-success">Resolved</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>April 28, 2023</td>
+                                        <td>Rice</td>
+                                        <td>Rice Blast</td>
+                                        <td>
+                                            <div class="severity-indicator" style="width: 100px;">
+                                                <div class="severity-bar severity-medium"></div>
+                                            </div>
+                                        </td>
+                                        <td>Tricyclazole</td>
+                                        <td><span class="badge bg-warning">Improving</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>April 10, 2023</td>
+                                        <td>Apple</td>
+                                        <td>Apple Scab</td>
+                                        <td>
+                                            <div class="severity-indicator" style="width: 100px;">
+                                                <div class="severity-bar severity-high"></div>
+                                            </div>
+                                        </td>
+                                        <td>Pruning + Fungicide</td>
+                                        <td><span class="badge bg-danger">Critical</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-success">View Full History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-4">About AgriScan AI</h2>
+                    <p class="mb-4">AgriScan AI is an innovative platform that combines artificial intelligence with agricultural expertise to help farmers protect their crops from diseases.</p>
+                    <p class="mb-4">Our system can identify over 50 common crop diseases with 95% accuracy, providing instant treatment recommendations to minimize crop damage and maximize yields.</p>
+                    <div class="d-flex">
+                        <div class="me-4">
+                            <h3 class="text-success fw-bold">50+</h3>
+                            <p>Crop Diseases Identified</p>
+                        </div>
+                        <div class="me-4">
+                            <h3 class="text-success fw-bold">95%</h3>
+                            <p>Detection Accuracy</p>
+                        </div>
+                        <div>
+                            <h3 class="text-success fw-bold">30s</h3>
+                            <p>Average Diagnosis Time</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card p-4">
+                        <h4 class="mb-4">Supported Crops</h4>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Tomato
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Potato
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Rice
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Wheat
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Corn
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Apple
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Grape
+                            </div>
+                            <div class="col-6 mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i> Citrus
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3">More crops being added regularly based on farmer feedback and regional requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="fw-bold mb-4"><i class="bi bi-tree-fill me-2"></i>AgriScan AI</h4>
+                    <p>Empowering farmers with AI-powered crop disease detection and treatment recommendations to minimize crop damage and maximize yields.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#scan" class="text-white text-decoration-none">Scan Disease</a></li>
+                        <li class="mb-2"><a href="#history" class="text-white text-decoration-none">History</a></li>
+                        <li><a href="#about" class="text-white text-decoration-none">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-4">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Disease Library</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Treatment Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Farmer Community</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Research Papers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h5 class="mb-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> support@agriscan.ai</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +1 (800) 123-4567</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> 123 Farm Street, AgriCity</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center">
+                <p class="mb-0">© 2023 AgriScan AI. All rights reserved. | <a href="#" class="text-white text-decoration-none">Privacy Policy</a> | <a href="#" class="text-white text-decoration-none">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Farmer Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email or Phone Number</label>
+                            <input type="text" class="form-control" id="loginEmail" placeholder="Enter email or phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-decoration-none">Forgot password?</a>
+                        <p class="mt-2">Don't have an account? <a href="#" class="text-success text-decoration-none">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
