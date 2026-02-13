@@ -1,0 +1,1 @@
+# ai-crop-disease-detection-frontend
