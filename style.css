@@ -253,8 +253,9 @@ section h2:after {
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transform: translateY(-5px) scale(1.01); 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+
 }
 
 .step-card .feature-icon {
@@ -282,7 +283,7 @@ section h2:after {
 .upload-area {
     border: 3px dashed transparent;
     border-radius: var(--border-radius);
-    padding: 40px 20px;
+    padding: 15px 10px;  /* Reduced from 40px 20px to 25px 15px */
     text-align: center;
     background: linear-gradient(white, white) padding-box,
                 var(--gradient-5) border-box;
@@ -296,13 +297,12 @@ section h2:after {
 }
 
 .upload-area i {
-    font-size: 3.5rem;
+    font-size: 1.8rem;  /* Reduced from 3.5rem to 2.8rem */
     background: var(--gradient-5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
 /* ===== Vibrant Progress Bars ===== */
 .progress {
     height: 24px;
