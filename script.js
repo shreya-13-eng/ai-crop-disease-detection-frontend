@@ -17,6 +17,7 @@ imageInput.addEventListener("change", (event) => {
 });
 searchButton.addEventListener("click", () => {
     console.log("request sent")
+    // iss line tak sab thik chal raha hai.
     const formData = new FormData();
     formData.append("image", imageFile);
     const request = new Request("http://localhost:8080/predict", {
@@ -27,6 +28,7 @@ searchButton.addEventListener("click", () => {
     fetch(request)
         .then(async (response) => {
             if (response.status !== 200) {
+                // isme not equal to aaise hi likha jata hai? ha
                 const errroMsg = await response.text()
                 throw new Error("Something went wrong on API server!:"+errroMsg);
             }
@@ -41,3 +43,4 @@ searchButton.addEventListener("click", () => {
             console.error(error);
         });
 })
+
