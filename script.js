@@ -1,3 +1,52 @@
+// Add these functions at the very top of your script.js
+
+// Toggle password visibility (for login modal)
+function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(iconId);
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('bi-eye');
+        toggleIcon.classList.add('bi-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('bi-eye-slash');
+        toggleIcon.classList.add('bi-eye');
+    }
+}
+
+// Forgot password handler
+document.addEventListener('DOMContentLoaded', function() {
+    const forgotForm = document.getElementById('forgotPasswordForm');
+    if (forgotForm) {
+        forgotForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            
+            // Show success message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success';
+            alertDiv.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Reset instructions sent! Check your email.';
+            
+            document.getElementById('forgotAlert').innerHTML = '';
+            document.getElementById('forgotAlert').appendChild(alertDiv);
+            
+            // Reset form
+            this.reset();
+            
+            // Close modal after 3 seconds
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                if (modal) modal.hide();
+            }, 3000);
+        });
+    }
+});
+
+// Rest of your existing script.js code below...
+// Keep all your existing code from here onward
+
 const uploadBtn = document.getElementById("uploadBtn");
 const imageInput = document.getElementById("imageInput");
 const searchButton = document.getElementById("scanBtn");

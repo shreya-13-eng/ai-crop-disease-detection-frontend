@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AgriScan AI</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Simple Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-tree-fill me-2"></i>AgriScan AI
+            </a>
+            <a href="index.html" class="btn btn-outline-light">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Back to Login
+            </a>
+        </div>
+    </nav>
+
+    <!-- Signup Form -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="bi bi-person-plus me-2"></i>Create Account</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Alert message will appear here -->
+                        <div id="signupAlert"></div>
+
+                        <form id="signupForm">
+                            <div class="mb-3">
+                                <label for="signupName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="signupName" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="signupEmail" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="signupEmail" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="signupPhone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="signupPhone" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signupPassword" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                                <label class="form-check-label" for="termsCheck">
+                                    I agree to the Terms and Conditions
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100 py-2">
+                                <i class="bi bi-person-plus me-2"></i>Sign Up
+                            </button>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <p>Already have an account? <a href="index.html" class="text-success">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - IMPORTANT: Order matters! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
