@@ -1,4 +1,11 @@
 // Add these functions at the very top of your script.js
+import SessionManager from "./SessionManager.js";
+
+const session = SessionManager.getInstance();
+
+if (!session.isLoggedIn()) {
+    window.location.href = "index.html";
+}
 
 // Toggle password visibility (for login modal)
 function togglePassword(inputId, iconId) {
