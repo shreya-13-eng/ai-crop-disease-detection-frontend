@@ -2,8 +2,9 @@
 import SessionManager from "./SessionManager.js";
 
 const session = SessionManager.getInstance();
+const currentPage = window.location.pathname.split("/").pop();
 
-if (!session.isLoggedIn()) {
+if (!session.isLoggedIn() && currentPage !== "index.html") {
     window.location.href = "index.html";
 }
 
@@ -75,9 +76,14 @@ searchButton.addEventListener("click", () => {
     console.log("request sent")
     // iss line tak sab thik chal raha hai.
     const formData = new FormData();
+    console.log(session.getToken())
     formData.append("image", imageFile);
     const request = new Request("http://localhost:8080/predict", {
         method: "POST",
+        headers:{
+            "Authorization": "Bearer "+session.getToken(),
+    
+        },
         body: formData
     })
 
