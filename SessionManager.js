@@ -1,55 +1,67 @@
+
+// SessionManager.js - Simple session management
 class SessionManager {
-
-    static instance;
-    SESSION_KEY = "app_session";
-
     constructor() {
-        if (SessionManager.instance) {
-            return SessionManager.instance;
-        }
-        SessionManager.instance = this;
+        this.sessionKey = 'agriscan_session';
+        this.session = null;
+        this.loadSession();
     }
-
+    
     static getInstance() {
         if (!SessionManager.instance) {
             SessionManager.instance = new SessionManager();
         }
         return SessionManager.instance;
     }
-
-
-    login({ fullName, username, token }) {
-        const sessionData = {
-            fullName,
-            username,
-            token
+    
+    loadSession() {
+        const saved = localStorage.getItem(this.sessionKey);
+        if (saved) {
+            try {
+                this.session = JSON.parse(saved);
+            } catch (e) {
+                this.session = null;
+            }
+        }
+    }
+    
+    saveSession() {
+        if (this.session) {
+            localStorage.setItem(this.sessionKey, JSON.stringify(this.session));
+        } else {
+            localStorage.removeItem(this.sessionKey);
+        }
+    }
+    
+    login(userData) {
+        this.session = {
+            ...userData,
+            loginTime: new Date().toISOString()
         };
-
-        localStorage.setItem(
-            this.SESSION_KEY,
-            JSON.stringify(sessionData)
-        );
+        this.saveSession();
+        return true;
     }
-
+    
+    logout() {
+        this.session = null;
+        this.saveSession();
+        return true;
+    }
+    
+    isLoggedIn() {
+        return this.session !== null;
+    }
+    
     getCurrentSession() {
-        const data = localStorage.getItem(this.SESSION_KEY);
-        return data ? JSON.parse(data) : null;
+        return this.session;
     }
-
     
     getToken() {
-        const session = this.getCurrentSession();
-        return session ? session.token : null;
+        return this.session?.token || null;
     }
-
-   
-    logout() {
-        localStorage.removeItem(this.SESSION_KEY);
-    }
-
-
-    isLoggedIn() {
-        return this.getCurrentSession() !== null;
+    
+    getUser() {
+        return this.session;
     }
 }
 

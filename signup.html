@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <!-- Your CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
     <!-- Simple Navigation -->
@@ -25,66 +26,99 @@
     </nav>
 
     <!-- Signup Form -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0"><i class="bi bi-person-plus me-2"></i>Create Account</h4>
-                    </div>
-                    <div class="card-body">
-                        <!-- Alert message will appear here -->
-                        <div id="signupAlert"></div>
-
-                        <form id="signupForm">
-                            <div class="mb-3">
-                                <label for="signupName" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="signupName" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="signupEmail" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="signupEmail" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="signupPhone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="signupPhone" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="signupPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="signupPassword" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" required>
-                            </div>
-
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="termsCheck" required>
-                                <label class="form-check-label" for="termsCheck">
-                                    I agree to the Terms and Conditions
-                                </label>
-                            </div>
-
-                            <button type="submit" class="btn btn-success w-100 py-2">
-                                <i class="bi bi-person-plus me-2"></i>Sign Up
-                            </button>
-                        </form>
-
-                        <div class="text-center mt-3">
-                            <p>Already have an account? <a href="index.html" class="text-success">Login here</a></p>
-                        </div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join AgriScan AI to protect your crops</p>
+            </div>
+            
+            <div id="signupAlert"></div>
+            
+            <form id="signupForm" class="auth-form">
+                <div class="form-group mb-3">
+                    <label for="signupName" class="form-label">Full Name *</label>
+                    <div class="input-group position-relative">
+                        <i class="bi bi-person position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                        <input type="text" class="form-control" id="signupName" placeholder="Enter your full name" style="padding-left: 45px;" required>
                     </div>
                 </div>
-            </div>
+                
+                <div class="form-group mb-3">
+                    <label for="signupEmail" class="form-label">Email Address *</label>
+                    <div class="input-group position-relative">
+                        <i class="bi bi-envelope position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email" style="padding-left: 45px;" required>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="signupPhone" class="form-label">Phone Number *</label>
+                    <div class="input-group position-relative">
+                        <i class="bi bi-phone position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                        <input type="tel" class="form-control" id="signupPhone" placeholder="10-digit mobile number" maxlength="10" style="padding-left: 45px;" required>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="signupPassword" class="form-label">Password *</label>
+                    <div class="input-group position-relative">
+                        <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Create a password" style="padding-left: 45px;" required>
+                        <span class="password-toggle position-absolute" style="right: 15px; top: 12px; cursor: pointer; z-index: 10;" onclick="togglePasswordVisibility('signupPassword', this)">
+                            <i class="bi bi-eye"></i>
+                        </span>
+                    </div>
+                    <div class="password-strength mt-2">
+                        <div class="progress" style="height: 5px;">
+                            <div id="passwordStrengthBar" class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted" id="strengthText">Enter password</small>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                    <div class="input-group position-relative">
+                        <i class="bi bi-check-circle position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" style="padding-left: 45px;" required>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-4">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="termsAgree" required>
+                        <span class="checkmark"><i class="bi bi-check"></i></span>
+                        I agree to the <a href="#" class="text-success">Terms of Service</a> and <a href="#" class="text-success">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="auth-btn w-100" id="signupSubmitBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="spinner-border spinner-border-sm ms-2 d-none" id="signupSpinner"></span>
+                </button>
+                
+                <div class="auth-footer text-center mt-4">
+                    Already have an account? <a href="index.html" class="text-success text-decoration-none fw-bold">Sign In</a>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Scripts - IMPORTANT: Order matters! -->
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay d-none">
+        <div class="loading-content">
+            <div class="spinner-border text-success" style="width: 4rem; height: 4rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h4 class="mt-3 text-white">Creating your account...</h4>
+            <p class="text-white">Please wait while we set up your profile</p>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="SessionManager.js"></script>
     <script type="module" src="auth.js"></script>
 </body>
 </html>
+

@@ -30,7 +30,7 @@
     border-radius: var(--border-radius);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     padding: 40px;
     position: relative;
     overflow: hidden;
@@ -135,19 +135,14 @@
 }
 
 /* Checkbox Styles */
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 .checkbox-container {
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 0.95rem;
     color: #2c3e50;
+    position: relative;
+    padding-left: 30px;
 }
 
 .checkbox-container input {
@@ -159,12 +154,13 @@
 }
 
 .checkmark {
+    position: absolute;
+    left: 0;
     height: 20px;
     width: 20px;
     background-color: #fff;
     border: 2px solid #e0e0e0;
     border-radius: 5px;
-    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -183,18 +179,6 @@
 .checkbox-container input:checked ~ .checkmark i {
     color: white;
     font-size: 0.8rem;
-}
-
-.forgot-link {
-    color: var(--primary-green);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: var(--transition);
-}
-
-.forgot-link:hover {
-    color: var(--secondary-accent);
-    text-decoration: underline;
 }
 
 /* Button Styles */
@@ -239,6 +223,7 @@
 .auth-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    transform: none;
 }
 
 /* Divider */
@@ -339,7 +324,7 @@
     border-left: 4px solid #28a745;
 }
 
-.alert-error {
+.alert-danger {
     background: linear-gradient(135deg, #f8d7da, #f5c6cb);
     color: #721c24;
     border-left: 4px solid #dc3545;
@@ -355,49 +340,68 @@
     font-size: 1.2rem;
 }
 
-/* Loading Spinner */
-.spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 /* Password Strength Indicator */
 .password-strength {
-    margin-top: 10px;
+    margin-top: 8px;
+}
+
+.password-strength .progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
     height: 5px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
 }
 
-.strength-bar {
-    height: 100%;
-    width: 0;
-    transition: width 0.3s ease;
+#strengthText {
+    font-size: 0.75rem;
+    margin-top: 5px;
+    display: block;
 }
 
-.strength-bar.weak {
-    width: 33.33%;
-    background: linear-gradient(90deg, #f44336, #ff5722);
+/* OTP Timer */
+#otpTimer {
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
 
-.strength-bar.medium {
-    width: 66.66%;
-    background: linear-gradient(90deg, #ff9800, #ffc107);
+#timerSeconds {
+    font-weight: bold;
+    color: var(--primary-green);
+    font-size: 1.1rem;
 }
 
-.strength-bar.strong {
-    width: 100%;
-    background: linear-gradient(90deg, #4caf50, #8bc34a);
+/* OTP Input */
+#otpCode {
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+    font-weight: bold;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+    border-bottom: none;
+    gap: 10px;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: var(--primary-green);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--primary-green);
+    background-color: transparent;
 }
 
 /* Responsive */
@@ -410,9 +414,9 @@
         font-size: 1.75rem;
     }
     
-    .remember-forgot {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
+    .nav-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
     }
 }
+
