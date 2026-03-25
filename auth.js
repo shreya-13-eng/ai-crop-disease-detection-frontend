@@ -125,21 +125,26 @@ function logout() {
     session.logout();
     window.location.href = "index.html";
 }
-
-// ================= NAVIGATION =================
 function updateNavigation() {
     const user = session.getCurrentSession();
+
     const loginNavBtn = document.getElementById('loginNavBtn');
     const userInfo = document.getElementById('userInfo');
     const userNameDisplay = document.getElementById('userNameDisplay');
-    
+
     if (user) {
+      
         if (loginNavBtn) loginNavBtn.style.display = 'none';
         if (userInfo) userInfo.style.display = 'flex';
         if (userNameDisplay) userNameDisplay.textContent = user.fullName;
 
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) logoutBtn.onclick = logout;
+
+    } else {
+        if (loginNavBtn) loginNavBtn.style.display = 'block';
+        if (userInfo) userInfo.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.textContent = "";
     }
 }
 
@@ -153,7 +158,9 @@ function hideLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.classList.add('d-none');
 }
-
+window.addEventListener("authChanged", () => {
+    updateNavigation();
+});
 // ================= INIT =================
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -244,3 +251,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+window.updateNavigation = updateNavigation;
