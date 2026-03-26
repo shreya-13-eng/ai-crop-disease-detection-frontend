@@ -117,7 +117,7 @@ async function apiCall(request) {
             if (message.toLowerCase().includes("expired")) {
                 handleLogoutUI();
 
-               
+
                 window.updateUserNavigation();
 
                 window.dispatchEvent(new Event("authChanged"));
@@ -206,17 +206,16 @@ scanBtn?.addEventListener("click", async () => {
     });
 
     try {
+
         const response = await apiCall(request);
+        const data = typeof response === "string" ? JSON.parse(response) : response;
+        fillDetectionResults(data);
         const resultsSection = document.getElementById("resultsSection");
         const instructionsSection = document.getElementById("instructionsSection");
-
         if (resultsSection && instructionsSection) {
-            resultsSection.classList.remove("d-none");   // show result
-            instructionsSection.classList.add("d-none"); // hide instructions
+            resultsSection.classList.remove("d-none");
+            instructionsSection.classList.add("d-none");
         }
-
-        const blob = new Blob([response], { type: "text/html" });
-        window.open(URL.createObjectURL(blob), "_blank");
 
     } catch (error) {
         console.error(error);
@@ -227,6 +226,47 @@ scanBtn?.addEventListener("click", async () => {
         hideLoading();
     }
 });
+
+function fillDetectionResults(data) {
+    const resultsSection = document.getElementById("resultsSection");
+    resultsSection.classList.remove("d-none");
+
+    document.getElementById("diseaseName").innerText = data.diseaseName;
+    document.getElementById("diseaseDescription").innerText = data.description;
+    document.getElementById("severityBar").className = `severity-bar severity-${data.severity.toLowerCase()}`;
+    document.getElementById("severityText").innerText = data.severity;
+
+    const confidenceBar = document.getElementById("confidenceBar");
+    confidenceBar.style.width = data.confidence + "%";
+    confidenceBar.innerText = data.confidence + "%";
+
+   
+    let color = "#dc3545"; 
+    if (data.confidence >= 80) color = "#28a745";  
+    else if (data.confidence >= 50) color = "#ffc107";
+
+    confidenceBar.style.backgroundColor = color;
+
+    const treatmentCard = document.querySelector(".treatment-card");
+    treatmentCard.innerHTML = `<h4 class="mb-4">Recommended Treatments</h4>`; 
+    data.treatments.forEach(t => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+
+        let typeBadgeClass = "";
+        if (t.method.toLowerCase().includes("chemical")) typeBadgeClass = "chemical-badge";
+        else if (t.method.toLowerCase().includes("organic")) typeBadgeClass = "organic-badge";
+        else typeBadgeClass = "prevention-badge";
+
+        div.innerHTML = `
+            <h6><span class="badge ${typeBadgeClass} me-2">${t.type}</span> ${t.title}</h6>
+            <p>${t.description}</p>
+            ${t.note ? `<small class="text-muted"><i class="bi bi-clock me-1"></i> ${t.note}</small>` : ""}
+        `;
+
+        treatmentCard.appendChild(div);
+    });
+}
 
 // ================= INIT =================
 updateUIForLoginStatus();
