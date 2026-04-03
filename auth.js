@@ -2,7 +2,7 @@
 
 const session = SessionManager.getInstance();
 
-// Show alert messages
+// ================= ALERT =================
 function showAlert(message, type, containerId) {
     const alertContainer = document.getElementById(containerId);
     if (!alertContainer) return;
@@ -22,7 +22,7 @@ function showAlert(message, type, containerId) {
     }, 4000);
 }
 
-// Validate functions
+// ================= VALIDATION =================
 function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -31,6 +31,7 @@ function validatePhone(phone) {
     return /^\d{10}$/.test(phone);
 }
 
+<<<<<<< HEAD
 // Login function
 async function login(emailOrPhone, password) {
     console.log("Login attempt:", emailOrPhone);
@@ -47,59 +48,109 @@ async function login(emailOrPhone, password) {
     });
     
     return { success: true, message: "Login Successful!" };
+=======
+// ================= LOGIN API =================
+async function login(emailOrPhone, password) {
+    try {
+        const response = await fetch("http://localhost:8080/api/public/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: emailOrPhone,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Login failed");
+        }
+
+        session.login({
+            fullName: data.fullName,
+            username: data.userName,
+            token: data.token
+        });
+
+        return { success: true, message: "Login Successful!" };
+
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+>>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
 }
 
-// Request OTP function
+// ================= SIGNUP API =================
+async function signup(userData) {
+    try {
+        const response = await fetch("http://localhost:8080/api/public/sign-up", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fullName: userData.name,
+                email: userData.email,
+                password: userData.password,
+                phoneNumber: "91" + userData.phone
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Signup failed");
+        }
+
+        session.login({
+            fullName: data.fullName,
+            username: data.userName,
+            token: data.token
+        });
+
+        return { success: true, message: "Signup Successful!" };
+
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+// ================= OTP (DEMO - OPTIONAL) =================
 async function requestOTP(phoneNumber) {
-    console.log("Requesting OTP for:", phoneNumber);
     await new Promise(resolve => setTimeout(resolve, 1000));
     return { success: true, message: "OTP sent! Demo OTP: 123456" };
 }
 
-// Verify OTP function
 async function verifyOTP(phoneNumber, otpCode) {
-    console.log("Verifying OTP:", otpCode);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     if (otpCode === "123456") {
         session.login({
             fullName: `Farmer ${phoneNumber.slice(-4)}`,
             username: `farmer_${phoneNumber.slice(-4)}`,
             phone: phoneNumber,
-            token: "demo-token-" + Date.now()
+            token: "demo-token"
         });
-        return { success: true, message: "Login Successful!" };
+        return { success: true };
     }
-    
-    return { success: false, message: "Invalid OTP. Demo OTP is 123456" };
+    return { success: false, message: "Invalid OTP" };
 }
 
-// Signup function
-async function signup(userData) {
-    console.log("Signup:", userData.email);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    session.login({
-        fullName: userData.name,
-        username: userData.email.split('@')[0],
-        email: userData.email,
-        phone: userData.phone,
-        token: "demo-token-" + Date.now()
-    });
-    
-    return { success: true, message: "Signup Successful!" };
-}
-
+// ================= LOGOUT =================
 function logout() {
     session.logout();
     window.location.href = "index.html";
 }
-
 function updateNavigation() {
     const user = session.getCurrentSession();
+
     const loginNavBtn = document.getElementById('loginNavBtn');
     const userInfo = document.getElementById('userInfo');
     const userNameDisplay = document.getElementById('userNameDisplay');
+<<<<<<< HEAD
     
     console.log("Updating navigation, user logged in:", !!user);
     
@@ -147,6 +198,26 @@ function startOTPTimer() {
 }
 
 // Loading overlay
+=======
+
+    if (user) {
+      
+        if (loginNavBtn) loginNavBtn.style.display = 'none';
+        if (userInfo) userInfo.style.display = 'flex';
+        if (userNameDisplay) userNameDisplay.textContent = user.fullName;
+
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) logoutBtn.onclick = logout;
+
+    } else {
+        if (loginNavBtn) loginNavBtn.style.display = 'block';
+        if (userInfo) userInfo.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.textContent = "";
+    }
+}
+
+// ================= LOADING =================
+>>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
 function showLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.classList.remove('d-none');
@@ -156,6 +227,7 @@ function hideLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.classList.add('d-none');
 }
+<<<<<<< HEAD
 
 // Update upload button state
 function updateUploadButtonState() {
@@ -197,101 +269,46 @@ window.logout = logout;
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Auth.js initialized");
     
+=======
+window.addEventListener("authChanged", () => {
+>>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
     updateNavigation();
-    updateUploadButtonState();
-    
-    // Phone number validation
-    const signupPhone = document.getElementById('signupPhone');
-    if (signupPhone) {
-        signupPhone.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-        });
-    }
-    
-    const otpPhone = document.getElementById('otpPhoneNumber');
-    if (otpPhone) {
-        otpPhone.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-        });
-    }
-    
-    // Password strength indicator
-    const signupPassword = document.getElementById('signupPassword');
-    const strengthBar = document.getElementById('passwordStrengthBar');
-    const strengthText = document.getElementById('strengthText');
-    
-    if (signupPassword && strengthBar) {
-        signupPassword.addEventListener('input', function() {
-            const password = this.value;
-            let strength = 0;
-            if (password.length >= 8) strength += 25;
-            if (password.match(/[a-z]/)) strength += 25;
-            if (password.match(/[A-Z]/)) strength += 25;
-            if (password.match(/[0-9]/) || password.match(/[^a-zA-Z0-9]/)) strength += 25;
-            
-            strengthBar.style.width = strength + '%';
-            
-            if (strength <= 25) {
-                strengthBar.className = 'progress-bar bg-danger';
-                if (strengthText) strengthText.textContent = 'Weak password';
-            } else if (strength <= 50) {
-                strengthBar.className = 'progress-bar bg-warning';
-                if (strengthText) strengthText.textContent = 'Fair password';
-            } else if (strength <= 75) {
-                strengthBar.className = 'progress-bar bg-info';
-                if (strengthText) strengthText.textContent = 'Good password';
-            } else {
-                strengthBar.className = 'progress-bar bg-success';
-                if (strengthText) strengthText.textContent = 'Strong password';
-            }
-        });
-    }
-    
-    // Confirm password validation
-    const confirmPassword = document.getElementById('confirmPassword');
-    if (confirmPassword && signupPassword) {
-        confirmPassword.addEventListener('input', function() {
-            if (this.value !== signupPassword.value) {
-                this.setCustomValidity('Passwords do not match');
-            } else {
-                this.setCustomValidity('');
-            }
-        });
-    }
-    
-    // ========== LOGIN FORM ==========
+});
+// ================= INIT =================
+document.addEventListener('DOMContentLoaded', function() {
+
+    updateNavigation();
+
+    // ================= LOGIN =================
     const loginForm = document.getElementById('loginForm');
+
     if (loginForm) {
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const emailOrPhone = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const submitBtn = document.getElementById('loginSubmitBtn');
-            
+
             if (!emailOrPhone || !password) {
                 showAlert("Please fill all fields", "danger", "loginAlert");
                 return;
             }
-            
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Logging in...';
             showLoading();
-            
+
             const result = await login(emailOrPhone, password);
-            
+
             hideLoading();
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'Login';
-            
+
             if (result.success) {
                 showAlert(result.message, "success", "loginAlert");
-                updateUploadButtonState();
-                updateNavigation();
-                
+
                 setTimeout(() => {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                    if (modal) modal.hide();
                     window.location.reload();
                 }, 1000);
             } else {
@@ -299,183 +316,53 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // ========== OTP REQUEST ==========
-    const otpLoginRequestForm = document.getElementById('otpLoginRequestForm');
-    if (otpLoginRequestForm) {
-        otpLoginRequestForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const phoneNumber = document.getElementById('otpPhoneNumber').value.trim();
-            const requestBtn = document.getElementById('requestOtpBtn');
-            
-            if (!phoneNumber || !validatePhone(phoneNumber)) {
-                showAlert("Please enter a valid 10-digit phone number", "danger", "loginAlert");
-                return;
-            }
-            
-            requestBtn.disabled = true;
-            requestBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
-            showLoading();
-            
-            const result = await requestOTP(phoneNumber);
-            
-            hideLoading();
-            requestBtn.disabled = false;
-            requestBtn.innerHTML = 'Send OTP';
-            
-            if (result.success) {
-                showAlert("OTP sent! Demo OTP: 123456", "success", "loginAlert");
-                
-                const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                if (loginModal) loginModal.hide();
-                
-                window.pendingOTPPhone = phoneNumber;
-                
-                setTimeout(() => {
-                    const otpModal = new bootstrap.Modal(document.getElementById('otpModal'));
-                    otpModal.show();
-                    startOTPTimer();
-                }, 500);
-            } else {
-                showAlert(result.message, "danger", "loginAlert");
-            }
-        });
-    }
-    
-    // ========== OTP VERIFICATION ==========
-    const otpForm = document.getElementById('otpForm');
-    if (otpForm) {
-        otpForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const otpCode = document.getElementById('otpCode').value.trim();
-            const verifyBtn = document.getElementById('verifyOtpBtn');
-            
-            if (!otpCode || otpCode.length !== 6) {
-                showAlert("Please enter a valid 6-digit OTP", "danger", "otpAlert");
-                return;
-            }
-            
-            verifyBtn.disabled = true;
-            verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
-            showLoading();
-            
-            const result = await verifyOTP(window.pendingOTPPhone, otpCode);
-            
-            hideLoading();
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = 'Verify & Login';
-            
-            if (result.success) {
-                showAlert(result.message, "success", "otpAlert");
-                updateUploadButtonState();
-                updateNavigation();
-                
-                setTimeout(() => {
-                    const otpModal = bootstrap.Modal.getInstance(document.getElementById('otpModal'));
-                    if (otpModal) otpModal.hide();
-                    window.location.reload();
-                }, 1000);
-            } else {
-                showAlert(result.message, "danger", "otpAlert");
-            }
-        });
-    }
-    
-    // ========== RESEND OTP ==========
-    const resendOtpBtn = document.getElementById('resendOtpBtn');
-    if (resendOtpBtn) {
-        resendOtpBtn.addEventListener('click', async function() {
-            if (!window.pendingOTPPhone) {
-                showAlert("Please request OTP again", "danger", "otpAlert");
-                return;
-            }
-            
-            resendOtpBtn.disabled = true;
-            showLoading();
-            
-            const result = await requestOTP(window.pendingOTPPhone);
-            
-            hideLoading();
-            
-            if (result.success) {
-                showAlert("Demo OTP sent! Use code: 123456", "success", "otpAlert");
-                startOTPTimer();
-            } else {
-                showAlert(result.message, "danger", "otpAlert");
-                resendOtpBtn.disabled = false;
-            }
-        });
-    }
-    
-    // ========== SIGNUP FORM ==========
+
+    // ================= SIGNUP =================
     const signupForm = document.getElementById('signupForm');
+
     if (signupForm) {
         signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const phone = document.getElementById('signupPhone').value.trim();
             const password = document.getElementById('signupPassword').value;
             const confirm = document.getElementById('confirmPassword').value;
-            const terms = document.getElementById('termsAgree');
             const submitBtn = document.getElementById('signupSubmitBtn');
-            
+
             if (!name || !email || !phone || !password || !confirm) {
                 showAlert("Please fill all fields", "danger", "signupAlert");
                 return;
             }
-            
-            if (!validateEmail(email)) {
-                showAlert("Invalid email format", "danger", "signupAlert");
-                return;
-            }
-            
-            if (!validatePhone(phone)) {
-                showAlert("Invalid phone number (10 digits required)", "danger", "signupAlert");
-                return;
-            }
-            
+
             if (password !== confirm) {
                 showAlert("Passwords do not match", "danger", "signupAlert");
                 return;
             }
-            
-            if (password.length < 6) {
-                showAlert("Password must be at least 6 characters", "danger", "signupAlert");
-                return;
-            }
-            
-            if (!terms.checked) {
-                showAlert("Please agree to the Terms and Conditions", "danger", "signupAlert");
-                return;
-            }
-            
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating Account...';
             showLoading();
-            
+
             const result = await signup({ name, email, phone, password });
-            
+
             hideLoading();
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'Create Account';
-            
+
             if (result.success) {
                 showAlert(result.message, "success", "signupAlert");
-                updateUploadButtonState();
-                updateNavigation();
-                
+
                 setTimeout(() => {
-                    window.location.href = "index.html";
+                    window.location.reload();
                 }, 1000);
             } else {
                 showAlert(result.message, "danger", "signupAlert");
             }
         });
     }
+<<<<<<< HEAD
     
     // ========== FORGOT PASSWORD ==========
     const forgotForm = document.getElementById('forgotPasswordForm');
@@ -496,3 +383,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+=======
+
+});
+
+window.updateNavigation = updateNavigation;
+>>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1

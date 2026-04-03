@@ -1,291 +1,277 @@
-// Add these functions at the very top of your script.js
 import SessionManager from "./sessionManager.js";
 
 const session = SessionManager.getInstance();
 
-// Function to show loading overlay
-function showLoading() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if (loadingOverlay) {
-        loadingOverlay.classList.remove('d-none');
-    }
-}
+let imageFile = null;
 
-// Function to hide loading overlay
-function hideLoading() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if (loadingOverlay) {
-        loadingOverlay.classList.add('d-none');
-    }
-}
-
-// Function to check if user is logged in
-function isUserLoggedIn() {
-    return session.isLoggedIn();
-}
-
-// Function to update UI based on login status
-function updateUIForLoginStatus() {
-    const isLoggedIn = isUserLoggedIn();
-    const uploadBtn = document.getElementById("uploadBtn");
-    const cropType = document.getElementById("cropType");
-    const growthStage = document.getElementById("growthStage");
-    const scanBtn = document.getElementById("scanBtn");
-    const loginRequiredMsg = document.getElementById("loginRequiredMsg");
-    const uploadArea = document.getElementById("uploadArea");
-    
-    if (isLoggedIn) {
-        if (uploadBtn) uploadBtn.disabled = false;
-        if (cropType) cropType.disabled = false;
-        if (growthStage) growthStage.disabled = false;
-        if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.classList.add("d-none");
-        if (uploadArea) uploadArea.classList.remove("disabled");
-        
-        console.log("User is logged in - upload enabled");
-    } else {
-        if (uploadBtn) uploadBtn.disabled = true;
-        if (cropType) cropType.disabled = true;
-        if (growthStage) growthStage.disabled = true;
-        if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.classList.remove("d-none");
-        if (uploadArea) uploadArea.classList.add("disabled");
-        
-        console.log("User is not logged in - upload disabled");
-    }
-}
-
+// DOM
 const uploadBtn = document.getElementById("uploadBtn");
 const imageInput = document.getElementById("imageInput");
-const searchButton = document.getElementById("scanBtn");
+const scanBtn = document.getElementById("scanBtn");
 const uploadArea = document.getElementById("uploadArea");
 const imagePreview = document.getElementById("imagePreview");
 const previewImg = document.getElementById("previewImg");
 const removeImage = document.getElementById("removeImage");
 
-let imageFile = null;
-
-console.log("JS loaded");
-
-// Update UI based on login status
-updateUIForLoginStatus();
-
-// Upload button click handler
-if (uploadBtn) {
-    uploadBtn.addEventListener("click", () => {
-        if (!isUserLoggedIn()) {
-            alert("Please login first to upload images!");
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            return;
-        }
-        imageInput.click();
-    });
+// ================= LOADING =================
+function showLoading() {
+    document.getElementById('loadingOverlay')?.classList.remove('d-none');
+}
+function hideLoading() {
+    document.getElementById('loadingOverlay')?.classList.add('d-none');
 }
 
-// Upload area click handler
-if (uploadArea) {
-    uploadArea.addEventListener("click", () => {
-        if (!isUserLoggedIn()) {
-            alert("Please login first to upload images!");
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            return;
-        }
-        imageInput.click();
-    });
-    
-    // Drag and drop handlers
-    uploadArea.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        if (isUserLoggedIn()) {
-            uploadArea.classList.add("dragover");
-        }
-    });
-    
-    uploadArea.addEventListener("dragleave", () => {
-        uploadArea.classList.remove("dragover");
-    });
-    
-    uploadArea.addEventListener("drop", (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove("dragover");
-        
-        if (!isUserLoggedIn()) {
-            alert("Please login first to upload images!");
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            return;
-        }
-        
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith("image/")) {
-            handleImageSelect(file);
-        }
-    });
+// ================= AUTH =================
+function isUserLoggedIn() {
+    return session.isLoggedIn();
 }
 
-// Image input change handler
-if (imageInput) {
-    imageInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            handleImageSelect(file);
-        }
-    });
+function handleLogoutUI() {
+    session.logout();
+
+    // reset upload UI
+    imageFile = null;
+    uploadArea?.classList.remove("d-none");
+    imagePreview?.classList.add("d-none");
+    imageInput.value = "";
+
+    // update local UI
+    updateUIForLoginStatus();
+
+    // 🔥 IMPORTANT: navbar update (global)
+    window.updateUserNavigation();
+
+    // 🔥 notify auth.js also
+    window.dispatchEvent(new Event("authChanged"));
+
+    alert("Session expired. Please login again.");
 }
 
-// Handle image selection
+// ================= UI =================
+function updateUIForLoginStatus() {
+    const isLoggedIn = isUserLoggedIn();
+
+    const cropType = document.getElementById("cropType");
+    const growthStage = document.getElementById("growthStage");
+    const loginRequiredMsg = document.getElementById("loginRequiredMsg");
+
+    if (isLoggedIn) {
+        uploadBtn?.removeAttribute("disabled");
+        cropType?.removeAttribute("disabled");
+        growthStage?.removeAttribute("disabled");
+        scanBtn?.setAttribute("disabled", true);
+        loginRequiredMsg?.classList.add("d-none");
+        uploadArea?.classList.remove("disabled");
+    } else {
+        uploadBtn?.setAttribute("disabled", true);
+        cropType?.setAttribute("disabled", true);
+        growthStage?.setAttribute("disabled", true);
+        scanBtn?.setAttribute("disabled", true);
+        loginRequiredMsg?.classList.remove("d-none");
+        uploadArea?.classList.add("disabled");
+    }
+}
+
+// 🔥 NAVBAR UPDATE (Farmer Login toggle)
+function updateUserNavigation() {
+    const user = session.getCurrentSession();
+
+    const loginNavBtn = document.getElementById('loginNavBtn');
+    const userInfo = document.getElementById('userInfo');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    if (user) {
+        loginNavBtn?.classList.add('d-none');
+        userInfo?.classList.remove('d-none');
+        if (userNameDisplay) {
+            userNameDisplay.textContent = user.fullName || user.username;
+        }
+
+        if (logoutBtn) {
+            logoutBtn.onclick = () => handleLogoutUI(); // ✅ no reload
+        }
+    } else {
+        loginNavBtn?.classList.remove('d-none');
+        userInfo?.classList.add('d-none');
+        if (userNameDisplay) userNameDisplay.textContent = "";
+    }
+}
+async function apiCall(request) {
+    try {
+        const response = await fetch(request);
+        const text = await response.text();
+
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = text;
+        }
+
+        if (!response.ok) {
+            let message = typeof data === "object"
+                ? data.message || JSON.stringify(data)
+                : data;
+
+            if (message.toLowerCase().includes("expired")) {
+                handleLogoutUI();
+
+
+                window.updateUserNavigation();
+
+                window.dispatchEvent(new Event("authChanged"));
+
+                throw new Error("Session expired");
+            }
+
+            throw new Error(message);
+        }
+
+        return data;
+
+    } catch (error) {
+        if (error.message === "Failed to fetch") {
+            throw new Error("Network error. Please check your connection.");
+        }
+        throw error;
+    }
+}
+// ================= IMAGE =================
 function handleImageSelect(file) {
     imageFile = file;
-    console.log("Image selected:", file.name);
-    
+
     const reader = new FileReader();
     reader.onload = (e) => {
         previewImg.src = e.target.result;
         uploadArea.classList.add("d-none");
         imagePreview.classList.remove("d-none");
-        
-        if (searchButton) {
-            searchButton.disabled = false;
-        }
+        scanBtn.disabled = false;
     };
     reader.readAsDataURL(file);
 }
 
-// Remove image handler
-if (removeImage) {
-    removeImage.addEventListener("click", () => {
-        imageFile = null;
-        imageInput.value = "";
-        previewImg.src = "";
-        uploadArea.classList.remove("d-none");
-        imagePreview.classList.add("d-none");
-        
-        if (searchButton) {
-            searchButton.disabled = true;
-        }
-    });
-}
-
-// Scan button click handler
-if (searchButton) {
-    searchButton.addEventListener("click", () => {
-        if (!isUserLoggedIn()) {
-            alert("Please login first to scan!");
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            return;
-        }
-        
-        if (!imageFile) {
-            alert("Please select an image first!");
-            return;
-        }
-        
-        const cropType = document.getElementById("cropType").value;
-        const growthStage = document.getElementById("growthStage").value;
-        
-        if (!cropType) {
-            alert("Please select crop type!");
-            return;
-        }
-        
-        if (!growthStage) {
-            alert("Please select growth stage!");
-            return;
-        }
-        
-        console.log("Request sent - scanning image");
-        
-        // Show loading overlay
-        showLoading();
-        
-        // Disable scan button
-        searchButton.disabled = true;
-        const scanningSpinner = document.getElementById("scanningSpinner");
-        if (scanningSpinner) {
-            scanningSpinner.classList.remove("d-none");
-        }
-        
-        const formData = new FormData();
-        formData.append("image", imageFile);
-        formData.append("cropType", cropType);
-        formData.append("growthStage", growthStage);
-        
-        const request = new Request("http://localhost:8080/predict", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + session.getToken(),
-            },
-            body: formData
-        });
-        
-        fetch(request)
-            .then(async (response) => {
-                hideLoading();
-                
-                if (response.status !== 200) {
-                    const errorMsg = await response.text();
-                    throw new Error("Something went wrong on API server: " + errorMsg);
-                }
-                return response.text();
-            })
-            .then((response) => {
-                const blob = new Blob([response], { type: "text/html" });
-                const url = URL.createObjectURL(blob);
-                window.open(url, "_blank");
-                
-                // Show results section
-                const resultsSection = document.getElementById("resultsSection");
-                const instructionsSection = document.getElementById("instructionsSection");
-                if (resultsSection) resultsSection.classList.remove("d-none");
-                if (instructionsSection) instructionsSection.classList.add("d-none");
-            })
-            .catch((error) => {
-                console.error(error);
-                alert("Error: " + error.message);
-                hideLoading();
-            })
-            .finally(() => {
-                searchButton.disabled = false;
-                if (scanningSpinner) {
-                    scanningSpinner.classList.add("d-none");
-                }
-            });
-    });
-}
-
-// Update user navigation after login
-function updateUserNavigation() {
-    const user = session.getCurrentSession();
-    const loginNavBtn = document.getElementById('loginNavBtn');
-    const userInfo = document.getElementById('userInfo');
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    
-    if (user && loginNavBtn) {
-        if (loginNavBtn) loginNavBtn.classList.add('d-none');
-        if (userInfo) userInfo.classList.remove('d-none');
-        if (userNameDisplay) userNameDisplay.textContent = user.fullName || user.username;
-        
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.onclick = () => {
-                session.logout();
-                window.location.reload();
-            };
-        }
-    } else if (loginNavBtn) {
-        if (loginNavBtn) loginNavBtn.classList.remove('d-none');
-        if (userInfo) userInfo.classList.add('d-none');
+// ================= FILE PICKER =================
+function openFilePicker() {
+    if (!isUserLoggedIn()) {
+        alert("Please login first!");
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
     }
+    imageInput.click();
 }
 
-// Initialize user navigation
+// ================= EVENTS =================
+uploadBtn?.addEventListener("click", openFilePicker);
+uploadArea?.addEventListener("click", openFilePicker);
+
+imageInput?.addEventListener("change", (e) => {
+    if (e.target.files[0]) handleImageSelect(e.target.files[0]);
+});
+
+removeImage?.addEventListener("click", () => {
+    imageFile = null;
+    imageInput.value = "";
+    previewImg.src = "";
+    uploadArea.classList.remove("d-none");
+    imagePreview.classList.add("d-none");
+    scanBtn.disabled = true;
+});
+
+scanBtn?.addEventListener("click", async () => {
+    if (!isUserLoggedIn()) return alert("Please login first!");
+    if (!imageFile) return alert("Select image!");
+
+    const cropType = document.getElementById("cropType").value;
+    const growthStage = document.getElementById("growthStage").value;
+
+    if (!cropType || !growthStage) {
+        return alert("Fill all fields!");
+    }
+
+    showLoading();
+
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append("cropType", cropType);
+    formData.append("growthStage", growthStage);
+
+    const request = new Request("http://localhost:8080/predict", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + session.getToken(),
+        },
+        body: formData
+    });
+
+    try {
+
+        const response = await apiCall(request);
+        const data = typeof response === "string" ? JSON.parse(response) : response;
+        fillDetectionResults(data);
+        const resultsSection = document.getElementById("resultsSection");
+        const instructionsSection = document.getElementById("instructionsSection");
+        if (resultsSection && instructionsSection) {
+            resultsSection.classList.remove("d-none");
+            instructionsSection.classList.add("d-none");
+        }
+
+    } catch (error) {
+        console.error(error);
+        if (!error.message.includes("expired")) {
+            alert(error.message);
+        }
+    } finally {
+        hideLoading();
+    }
+});
+
+function fillDetectionResults(data) {
+    const resultsSection = document.getElementById("resultsSection");
+    resultsSection.classList.remove("d-none");
+
+    document.getElementById("diseaseName").innerText = data.diseaseName;
+    document.getElementById("diseaseDescription").innerText = data.description;
+    document.getElementById("severityBar").className = `severity-bar severity-${data.severity.toLowerCase()}`;
+    document.getElementById("severityText").innerText = data.severity;
+
+    const confidenceBar = document.getElementById("confidenceBar");
+    confidenceBar.style.width = data.confidence + "%";
+    confidenceBar.innerText = data.confidence + "%";
+
+   
+    let color = "#dc3545"; 
+    if (data.confidence >= 80) color = "#28a745";  
+    else if (data.confidence >= 50) color = "#ffc107";
+
+    confidenceBar.style.backgroundColor = color;
+
+    const treatmentCard = document.querySelector(".treatment-card");
+    treatmentCard.innerHTML = `<h4 class="mb-4">Recommended Treatments</h4>`; 
+    data.treatments.forEach(t => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+
+        let typeBadgeClass = "";
+        if (t.method.toLowerCase().includes("chemical")) typeBadgeClass = "chemical-badge";
+        else if (t.method.toLowerCase().includes("organic")) typeBadgeClass = "organic-badge";
+        else typeBadgeClass = "prevention-badge";
+
+        div.innerHTML = `
+            <h6><span class="badge ${typeBadgeClass} me-2">${t.type}</span> ${t.title}</h6>
+            <p>${t.description}</p>
+            ${t.note ? `<small class="text-muted"><i class="bi bi-clock me-1"></i> ${t.note}</small>` : ""}
+        `;
+
+        treatmentCard.appendChild(div);
+    });
+}
+
+// ================= INIT =================
+updateUIForLoginStatus();
 updateUserNavigation();
 
-// Export functions for global use
-window.isUserLoggedIn = isUserLoggedIn;
+// global access
 window.updateUIForLoginStatus = updateUIForLoginStatus;
-window.showLoading = showLoading;
-window.hideLoading = hideLoading;
+window.updateUserNavigation = updateUserNavigation;
