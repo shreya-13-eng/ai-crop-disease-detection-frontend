@@ -458,3 +458,16 @@ footer a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gradient-4);
 }
+
+/* Ensure all buttons are visible */
+.btn-success,
+.btn-outline-success,
+#loginSubmitBtn,
+#requestOtpBtn,
+#verifyOtpBtn,
+#signupSubmitBtn,
+.auth-btn {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}

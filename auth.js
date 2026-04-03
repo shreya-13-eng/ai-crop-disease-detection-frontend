@@ -1,4 +1,4 @@
-import SessionManager from "./sessionManager.js";
+ import SessionManager from "./sessionManager.js";
 
 const session = SessionManager.getInstance();
 
@@ -31,14 +31,13 @@ function validatePhone(phone) {
     return /^\d{10}$/.test(phone);
 }
 
-// Login function - Demo mode always works
+// Login function
 async function login(emailOrPhone, password) {
     console.log("Login attempt:", emailOrPhone);
     
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Always succeed in demo mode
+    // Demo login - accepts any email/phone and any password
     session.login({
         fullName: emailOrPhone.includes('@') ? emailOrPhone.split('@')[0] : emailOrPhone,
         username: emailOrPhone.includes('@') ? emailOrPhone.split('@')[0] : emailOrPhone,
@@ -54,7 +53,7 @@ async function login(emailOrPhone, password) {
 async function requestOTP(phoneNumber) {
     console.log("Requesting OTP for:", phoneNumber);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    return { success: true, message: "OTP sent! Demo OTP: 123456", isDemo: true };
+    return { success: true, message: "OTP sent! Demo OTP: 123456" };
 }
 
 // Verify OTP function
@@ -102,36 +101,23 @@ function updateNavigation() {
     const userInfo = document.getElementById('userInfo');
     const userNameDisplay = document.getElementById('userNameDisplay');
     
-    if (user && loginNavBtn) {
-        if (loginNavBtn) loginNavBtn.style.display = 'none';
-        if (userInfo) userInfo.style.display = 'flex';
+    console.log("Updating navigation, user logged in:", !!user);
+    
+    if (user) {
+        if (loginNavBtn) loginNavBtn.classList.add('d-none');
+        if (userInfo) userInfo.classList.remove('d-none');
         if (userNameDisplay) userNameDisplay.textContent = user.fullName || user.username;
         
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
-            logoutBtn.onclick = () => logout();
+            logoutBtn.onclick = (e) => {
+                e.preventDefault();
+                logout();
+            };
         }
-    } else if (loginNavBtn) {
-        if (loginNavBtn) loginNavBtn.style.display = 'inline-block';
-        if (userInfo) userInfo.style.display = 'none';
-    }
-}
-
-// Password visibility toggle
-window.togglePasswordVisibility = function(inputId, element) {
-    const passwordInput = document.getElementById(inputId);
-    const icon = element.querySelector('i');
-    
-    if (passwordInput) {
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        }
+    } else {
+        if (loginNavBtn) loginNavBtn.classList.remove('d-none');
+        if (userInfo) userInfo.classList.add('d-none');
     }
 }
 
@@ -186,7 +172,7 @@ function updateUploadButtonState() {
         if (cropType) cropType.disabled = false;
         if (growthStage) growthStage.disabled = false;
         if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.style.display = 'none';
+        if (loginRequiredMsg) loginRequiredMsg.classList.add('d-none');
         if (uploadArea) uploadArea.classList.remove('disabled');
         console.log("✅ Upload enabled - User logged in");
     } else {
@@ -194,7 +180,7 @@ function updateUploadButtonState() {
         if (cropType) cropType.disabled = true;
         if (growthStage) growthStage.disabled = true;
         if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.style.display = 'block';
+        if (loginRequiredMsg) loginRequiredMsg.classList.remove('d-none');
         if (uploadArea) uploadArea.classList.add('disabled');
         console.log("❌ Upload disabled - User not logged in");
     }
@@ -205,6 +191,7 @@ window.showLoading = showLoading;
 window.hideLoading = hideLoading;
 window.updateUploadButtonState = updateUploadButtonState;
 window.startOTPTimer = startOTPTimer;
+window.logout = logout;
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {

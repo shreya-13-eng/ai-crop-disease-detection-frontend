@@ -61,30 +61,19 @@
                 </div>
                 
                 <div class="form-group mb-3">
-                    <label for="signupPassword" class="form-label">Password *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="password" class="form-control" id="signupPassword" placeholder="Create a password" style="padding-left: 45px;" required>
-                        <span class="password-toggle position-absolute" style="right: 15px; top: 12px; cursor: pointer; z-index: 10;" onclick="togglePasswordVisibility('signupPassword', this)">
-                            <i class="bi bi-eye"></i>
-                        </span>
-                    </div>
-                    <div class="password-strength mt-2">
-                        <div class="progress" style="height: 5px;">
-                            <div id="passwordStrengthBar" class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <small class="text-muted" id="strengthText">Enter password</small>
-                    </div>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-check-circle position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" style="padding-left: 45px;" required>
-                    </div>
-                </div>
-                
+    <label for="signupPassword" class="form-label">Password *</label>
+    <div class="input-group position-relative">
+        <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+        <input type="password" class="form-control" id="signupPassword" placeholder="Create a password" style="padding-left: 45px;" required>
+    </div>
+    <div class="password-strength mt-2">
+        <div class="progress" style="height: 5px;">
+            <div id="passwordStrengthBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        <small class="text-muted" id="strengthText">Enter password</small>
+    </div>
+</div>
+
                 <div class="form-group mb-4">
                     <label class="checkbox-container">
                         <input type="checkbox" id="termsAgree" required>

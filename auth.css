@@ -106,32 +106,81 @@
 .auth-form .form-control {
     width: 100%;
     padding: 12px 15px 12px 45px;
-    border: 2px solid transparent;
+    border: 2px solid #e0e0e0;
     border-radius: 50px;
-    background: linear-gradient(white, white) padding-box,
-                var(--gradient-5) border-box;
+    background: white;
     transition: var(--transition);
 }
 
 .auth-form .form-control:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 3px rgba(255, 143, 0, 0.3);
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(46, 125, 32, 0.1);
     transform: translateY(-2px);
     outline: none;
 }
 
-.auth-form .password-toggle {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #6c757d;
-    z-index: 1;
+/* BUTTON STYLES - ALWAYS VISIBLE */
+.auth-btn,
+.btn-success,
+.btn-outline-success,
+#requestOtpBtn,
+#verifyOtpBtn,
+#resendOtpBtn,
+#loginSubmitBtn,
+#signupSubmitBtn {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 }
 
-.auth-form .password-toggle:hover {
-    color: var(--primary-green);
+.auth-btn:hover,
+.btn-success:hover,
+.btn-outline-success:hover,
+#requestOtpBtn:hover,
+#verifyOtpBtn:hover,
+#resendOtpBtn:hover,
+#loginSubmitBtn:hover,
+#signupSubmitBtn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+    opacity: 0.9 !important;
+}
+
+/* Disabled button state */
+.auth-btn:disabled,
+.btn-success:disabled,
+#requestOtpBtn:disabled,
+#verifyOtpBtn:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* Modal buttons - ensure visibility */
+.modal .btn-success {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.modal .btn-outline-success {
+    background: transparent !important;
+    border: 2px solid #2e7d32 !important;
+    color: #2e7d32 !important;
+}
+
+.modal .btn-outline-success:hover {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+    border: none !important;
+    color: white !important;
 }
 
 /* Checkbox Styles */
@@ -179,113 +228,6 @@
 .checkbox-container input:checked ~ .checkmark i {
     color: white;
     font-size: 0.8rem;
-}
-
-/* Button Styles */
-.auth-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--gradient-5);
-    border: none;
-    border-radius: 50px;
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.auth-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.auth-btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.auth-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 143, 0, 0.4);
-}
-
-.auth-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Divider */
-.divider {
-    text-align: center;
-    margin: 25px 0;
-    position: relative;
-}
-
-.divider::before,
-.divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: calc(50% - 70px);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-}
-
-.divider::before {
-    left: 0;
-}
-
-.divider::after {
-    right: 0;
-}
-
-.divider span {
-    background: white;
-    padding: 0 15px;
-    color: #6c757d;
-    font-size: 0.9rem;
-}
-
-/* Social Login */
-.social-login {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 25px;
-}
-
-.social-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(white, white) padding-box,
-                var(--gradient-5) border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-green);
-    font-size: 1.3rem;
-    transition: var(--transition);
-    cursor: pointer;
-}
-
-.social-btn:hover {
-    transform: translateY(-3px) scale(1.1);
-    background: var(--gradient-5);
-    color: white;
 }
 
 /* Auth Footer */
@@ -419,4 +361,3 @@
         font-size: 0.9rem;
     }
 }
-
