@@ -31,24 +31,6 @@ function validatePhone(phone) {
     return /^\d{10}$/.test(phone);
 }
 
-<<<<<<< HEAD
-// Login function
-async function login(emailOrPhone, password) {
-    console.log("Login attempt:", emailOrPhone);
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Demo login - accepts any email/phone and any password
-    session.login({
-        fullName: emailOrPhone.includes('@') ? emailOrPhone.split('@')[0] : emailOrPhone,
-        username: emailOrPhone.includes('@') ? emailOrPhone.split('@')[0] : emailOrPhone,
-        email: emailOrPhone.includes('@') ? emailOrPhone : null,
-        phone: !emailOrPhone.includes('@') ? emailOrPhone : null,
-        token: "demo-token-" + Date.now()
-    });
-    
-    return { success: true, message: "Login Successful!" };
-=======
 // ================= LOGIN API =================
 async function login(emailOrPhone, password) {
     try {
@@ -80,7 +62,6 @@ async function login(emailOrPhone, password) {
     } catch (error) {
         return { success: false, message: error.message };
     }
->>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
 }
 
 // ================= SIGNUP API =================
@@ -150,55 +131,6 @@ function updateNavigation() {
     const loginNavBtn = document.getElementById('loginNavBtn');
     const userInfo = document.getElementById('userInfo');
     const userNameDisplay = document.getElementById('userNameDisplay');
-<<<<<<< HEAD
-    
-    console.log("Updating navigation, user logged in:", !!user);
-    
-    if (user) {
-        if (loginNavBtn) loginNavBtn.classList.add('d-none');
-        if (userInfo) userInfo.classList.remove('d-none');
-        if (userNameDisplay) userNameDisplay.textContent = user.fullName || user.username;
-        
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.onclick = (e) => {
-                e.preventDefault();
-                logout();
-            };
-        }
-    } else {
-        if (loginNavBtn) loginNavBtn.classList.remove('d-none');
-        if (userInfo) userInfo.classList.add('d-none');
-    }
-}
-
-// OTP Timer
-let otpTimerInterval = null;
-
-function startOTPTimer() {
-    const timerElement = document.getElementById('otpTimer');
-    const secondsElement = document.getElementById('timerSeconds');
-    const resendBtn = document.getElementById('resendOtpBtn');
-    let secondsLeft = 30;
-    
-    if (otpTimerInterval) clearInterval(otpTimerInterval);
-    
-    if (timerElement) timerElement.classList.remove('d-none');
-    
-    otpTimerInterval = setInterval(() => {
-        secondsLeft--;
-        if (secondsElement) secondsElement.textContent = secondsLeft;
-        
-        if (secondsLeft <= 0) {
-            clearInterval(otpTimerInterval);
-            if (timerElement) timerElement.classList.add('d-none');
-            if (resendBtn) resendBtn.disabled = false;
-        }
-    }, 1000);
-}
-
-// Loading overlay
-=======
 
     if (user) {
       
@@ -217,7 +149,6 @@ function startOTPTimer() {
 }
 
 // ================= LOADING =================
->>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
 function showLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.classList.remove('d-none');
@@ -227,51 +158,7 @@ function hideLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.classList.add('d-none');
 }
-<<<<<<< HEAD
-
-// Update upload button state
-function updateUploadButtonState() {
-    const user = session.getCurrentSession();
-    const uploadBtn = document.getElementById('uploadBtn');
-    const cropType = document.getElementById('cropType');
-    const growthStage = document.getElementById('growthStage');
-    const scanBtn = document.getElementById('scanBtn');
-    const loginRequiredMsg = document.getElementById('loginRequiredMsg');
-    const uploadArea = document.getElementById('uploadArea');
-    
-    if (user) {
-        if (uploadBtn) uploadBtn.disabled = false;
-        if (cropType) cropType.disabled = false;
-        if (growthStage) growthStage.disabled = false;
-        if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.classList.add('d-none');
-        if (uploadArea) uploadArea.classList.remove('disabled');
-        console.log("✅ Upload enabled - User logged in");
-    } else {
-        if (uploadBtn) uploadBtn.disabled = true;
-        if (cropType) cropType.disabled = true;
-        if (growthStage) growthStage.disabled = true;
-        if (scanBtn) scanBtn.disabled = true;
-        if (loginRequiredMsg) loginRequiredMsg.classList.remove('d-none');
-        if (uploadArea) uploadArea.classList.add('disabled');
-        console.log("❌ Upload disabled - User not logged in");
-    }
-}
-
-// Make functions global
-window.showLoading = showLoading;
-window.hideLoading = hideLoading;
-window.updateUploadButtonState = updateUploadButtonState;
-window.startOTPTimer = startOTPTimer;
-window.logout = logout;
-
-// Initialize everything when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Auth.js initialized");
-    
-=======
 window.addEventListener("authChanged", () => {
->>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1
     updateNavigation();
 });
 // ================= INIT =================
@@ -362,30 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-<<<<<<< HEAD
-    
-    // ========== FORGOT PASSWORD ==========
-    const forgotForm = document.getElementById('forgotPasswordForm');
-    if (forgotForm) {
-        forgotForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('resetEmail').value;
-            if (email) {
-                showAlert("Reset instructions sent! Check your email.", "success", "forgotAlert");
-                this.reset();
-                setTimeout(() => {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
-                    if (modal) modal.hide();
-                }, 3000);
-            } else {
-                showAlert("Please enter your email or phone number", "danger", "forgotAlert");
-            }
-        });
-    }
-});
-=======
 
 });
 
 window.updateNavigation = updateNavigation;
->>>>>>> 359d38ed8f917e5f28441de6a9bc69dfcdd97ec1

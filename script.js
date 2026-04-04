@@ -163,7 +163,7 @@ function openFilePicker() {
 }
 
 // ================= EVENTS =================
-uploadBtn?.addEventListener("click", openFilePicker);
+
 uploadArea?.addEventListener("click", openFilePicker);
 
 imageInput?.addEventListener("change", (e) => {
