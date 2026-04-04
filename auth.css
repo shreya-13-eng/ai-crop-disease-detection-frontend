@@ -89,23 +89,29 @@
     display: block;
 }
 
-.auth-form .input-group {
-    position: relative;
+.auth-form .input-group i {
+    position: static;
+    transform: none;
 }
 
-.auth-form .input-group i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--primary-green);
-    font-size: 1.2rem;
-    z-index: 1;
+.input-group-text i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-group-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group-text i {
+    line-height: 1;
 }
 
 .auth-form .form-control {
     width: 100%;
-    padding: 12px 15px 12px 45px;
+   
     border: 2px solid #e0e0e0;
     border-radius: 50px;
     background: white;
