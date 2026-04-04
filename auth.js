@@ -92,7 +92,7 @@ async function signup(userData) {
             token: data.token
         });
 
-        return { success: true, message: "Signup Successful!" };
+        return { success: true, message: "Verification OTP sent to mail!" };
 
     } catch (error) {
         return { success: false, message: error.message };

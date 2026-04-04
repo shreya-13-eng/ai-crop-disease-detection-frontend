@@ -259,7 +259,7 @@ function fillDetectionResults(data) {
         else typeBadgeClass = "prevention-badge";
 
         div.innerHTML = `
-            <h6><span class="badge ${typeBadgeClass} me-2">${t.type}</span> ${t.title}</h6>
+            <h6><span class="badge ${typeBadgeClass} me-2">${t.method}</span> ${t.title}</h6>
             <p>${t.description}</p>
             ${t.note ? `<small class="text-muted"><i class="bi bi-clock me-1"></i> ${t.note}</small>` : ""}
         `;
