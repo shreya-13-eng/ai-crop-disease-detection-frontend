@@ -133,10 +133,7 @@
 #verifyOtpBtn,
 #resendOtpBtn,
 #loginSubmitBtn,
-#signupSubmitBtn {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: inline-block !important;
+#signupSubmitBtn {   
     background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
     border: none !important;
     color: white !important;
@@ -145,6 +142,16 @@
     border-radius: 50px !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
+}
+.auth-btn:disabled,
+.btn-success:disabled,
+#requestOtpBtn:disabled,
+#verifyOtpBtn:disabled,
+#signupSubmitBtn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important; /* important */
+    transform: none !important;
 }
 
 .auth-btn:hover,

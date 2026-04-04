@@ -1,4 +1,4 @@
- import SessionManager from "./sessionManager.js";
+import SessionManager from "./sessionManager.js";
 
 const session = SessionManager.getInstance();
 
@@ -6,7 +6,7 @@ const session = SessionManager.getInstance();
 function showAlert(message, type, containerId) {
     const alertContainer = document.getElementById(containerId);
     if (!alertContainer) return;
-    
+
     alertContainer.innerHTML = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
             <i class="bi ${type === 'success' ? 'bi-check-circle-fill' : type === 'danger' ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill'} me-2"></i>
@@ -14,7 +14,7 @@ function showAlert(message, type, containerId) {
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     `;
-    
+
     setTimeout(() => {
         if (alertContainer.firstChild) {
             alertContainer.firstChild.remove();
@@ -133,7 +133,7 @@ function updateNavigation() {
     const userNameDisplay = document.getElementById('userNameDisplay');
 
     if (user) {
-      
+
         if (loginNavBtn) loginNavBtn.style.display = 'none';
         if (userInfo) userInfo.style.display = 'flex';
         if (userNameDisplay) userNameDisplay.textContent = user.fullName;
@@ -162,7 +162,7 @@ window.addEventListener("authChanged", () => {
     updateNavigation();
 });
 // ================= INIT =================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     updateNavigation();
 
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
 
     if (loginForm) {
-        loginForm.addEventListener('submit', async function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const emailOrPhone = document.getElementById('loginEmail').value.trim();
@@ -208,15 +208,71 @@ document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signupForm');
 
     if (signupForm) {
-        signupForm.addEventListener('submit', async function(e) {
+
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const strengthBar = document.getElementById('passwordStrengthBar');
+        const strengthText = document.getElementById('strengthText');
+        const submitBtn = document.getElementById('signupSubmitBtn');
+        submitBtn.disabled = true;
+        function updatePasswordStrength() {
+            const password = passwordInput.value;
+            let strength = 0;
+
+            if (password.length >= 6) strength += 20;
+            if (/[a-z]/.test(password)) strength += 20;
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/[0-9]/.test(password)) strength += 20;
+            if (/[@$!%*?&]/.test(password)) strength += 20;
+
+            strengthBar.style.width = strength + "%";
+
+            if (strength <= 20) {
+                strengthBar.className = "progress-bar bg-danger";
+                strengthText.innerText = "Weak";
+            } else if (strength <= 40) {
+                strengthBar.className = "progress-bar bg-warning";
+                strengthText.innerText = "Moderate";
+            } else if (strength <= 60) {
+                strengthBar.className = "progress-bar bg-info";
+                strengthText.innerText = "Good";
+            } else {
+                strengthBar.className = "progress-bar bg-success";
+                strengthText.innerText = "Strong";
+            }
+        }
+
+        function validatePasswords() {
+            const password = passwordInput.value;
+            const confirm = confirmPassword.value;
+            submitBtn.disabled = true;
+            if (confirm === "") {
+                confirmPassword.style.borderColor = "red";
+                return;
+            }
+            if (password !== confirm) {
+                confirmPassword.style.borderColor = "red";
+                return;
+            }
+            confirmPassword.style.borderColor = "green";
+            submitBtn.disabled = false;
+        }
+        passwordInput.addEventListener('input', () => {
+            updatePasswordStrength();
+            validatePasswords();
+        });
+
+        confirmPassword.addEventListener('input', validatePasswords);
+
+        submitBtn.addEventListener('click', async function (e) {
             e.preventDefault();
+            console.log("sign up clicked");
 
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const phone = document.getElementById('signupPhone').value.trim();
-            const password = document.getElementById('signupPassword').value;
-            const confirm = document.getElementById('confirmPassword').value;
-            const submitBtn = document.getElementById('signupSubmitBtn');
+            const password = passwordInput.value;
+            const confirm = confirmPassword.value;
 
             if (!name || !email || !phone || !password || !confirm) {
                 showAlert("Please fill all fields", "danger", "signupAlert");
