@@ -1,0 +1,135 @@
+:root {
+    --primary-green: #2e7d32;
+    --primary-light: #4caf50;
+    --accent: #fee140;
+    --accent2: #fa709a;
+    --radius: 12px;
+}
+
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(106,27,154,0.9)),
+                url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449') center/cover no-repeat;
+    padding: 20px;
+}
+
+
+.auth-card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+}
+
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-header h2 {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.auth-form .form-control {
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.auth-form .form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+    outline: none;
+}
+
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+#signupSubmitBtn {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+
+#signupSubmitBtn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+    opacity: 0.9 !important;
+}
+
+
+#signupSubmitBtn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.checkbox-container input {
+    width: 18px;
+    height: 18px;
+}
+
+
+.progress {
+    height: 5px;
+    border-radius: 10px;
+    background: #eee;
+}
+
+.progress-bar {
+    transition: width 0.3s;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
