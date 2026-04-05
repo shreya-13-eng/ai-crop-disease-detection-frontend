@@ -70,7 +70,8 @@
     transform: translateY(-2px);
     opacity: 0.9;
 }
-#signupSubmitBtn {
+#signupSubmitBtn,
+#verifyOtpBtn {
     background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
     border: none !important;
     color: white !important;
@@ -82,14 +83,16 @@
 }
 
 
-#signupSubmitBtn:hover {
+#signupSubmitBtn:hover,
+#verifyOtpBtn:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
     opacity: 0.9 !important;
 }
 
 
-#signupSubmitBtn:disabled {
+#signupSubmitBtn:disabled,
+#verifyOtpBtn:disabled{
     opacity: 0.5 !important;
     cursor: not-allowed !important;
     transform: none !important;

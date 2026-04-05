@@ -27,90 +27,119 @@
         </div>
     </nav>
 
-    <!-- Signup Form -->
     <div class="auth-container">
         <div class="auth-card">
-            <div class="auth-header">
-                <h2>Create Account</h2>
-                <p>Join AgriScan AI to protect your crops</p>
+
+            <!-- SIGNUP FORM -->
+            <div id="signupSection">
+                <div class="auth-header">
+                    <h2>Create Account</h2>
+                    <p>Join AgriScan AI to protect your crops</p>
+                </div>
+
+                <div id="signupAlert"></div>
+
+                <form id="signupForm" class="auth-form">
+                    <div class="form-group mb-3">
+                        <label for="signupName" class="form-label">Full Name *</label>
+                        <div class="input-group position-relative">
+                            <i class="bi bi-person position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                            <input type="text" class="form-control" id="signupName" placeholder="Enter your full name"
+                                style="padding-left: 45px;" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="signupEmail" class="form-label">Email Address *</label>
+                        <div class="input-group position-relative">
+                            <i class="bi bi-envelope position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                            <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email"
+                                style="padding-left: 45px;" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="signupPhone" class="form-label">Phone Number *</label>
+                        <div class="input-group position-relative">
+                            <i class="bi bi-phone position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                            <input type="tel" class="form-control" id="signupPhone" placeholder="10-digit mobile number"
+                                maxlength="10" style="padding-left: 45px;" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="signupPassword" class="form-label">Password *</label>
+                        <div class="input-group position-relative">
+                            <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                            <input type="password" class="form-control" id="signupPassword"
+                                placeholder="Create a password" style="padding-left: 45px;" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                        <div class="input-group position-relative">
+                            <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                placeholder="Confirm password" style="padding-left: 45px;" required>
+                        </div>
+
+                        <div class="password-strength mt-2">
+                            <div class="progress" style="height: 5px;">
+                                <div id="passwordStrengthBar" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted" id="strengthText"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="termsAgree" required>
+                            <span class="checkmark"><i class="bi bi-check"></i></span>
+                            I agree to the <a href="#" class="text-success">Terms of Service</a> and <a href="#"
+                                class="text-success">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-btn w-100" id="signupSubmitBtn">
+                        <span class="btn-text">Create Account</span>
+                        <span class="spinner-border spinner-border-sm ms-2 d-none" id="signupSpinner"></span>
+                    </button>
+
+                    <div class="auth-footer text-center mt-4">
+                        Already have an account? <a href="index.html"
+                            class="text-success text-decoration-none fw-bold">Sign
+                            In</a>
+                    </div>
+                </form>
             </div>
 
-            <div id="signupAlert"></div>
-
-            <form id="signupForm" class="auth-form">
-                <div class="form-group mb-3">
-                    <label for="signupName" class="form-label">Full Name *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-person position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="text" class="form-control" id="signupName" placeholder="Enter your full name"
-                            style="padding-left: 45px;" required>
-                    </div>
+            <!-- OTP FORM -->
+            <div id="otpSection" style="display:none;">
+                <div class="auth-header text-center">
+                    <h2>Verify OTP</h2>
+                    <p>Enter the OTP sent to your email</p>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="signupEmail" class="form-label">Email Address *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-envelope position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email"
-                            style="padding-left: 45px;" required>
-                    </div>
-                </div>
+                <div id="otpAlert"></div>
 
-                <div class="form-group mb-3">
-                    <label for="signupPhone" class="form-label">Phone Number *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-phone position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="tel" class="form-control" id="signupPhone" placeholder="10-digit mobile number"
-                            maxlength="10" style="padding-left: 45px;" required>
-                    </div>
-                </div>
+                <form id="otpForm" class="auth-form">
 
-                <div class="form-group mb-3">
-                    <label for="signupPassword" class="form-label">Password *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="password" class="form-control" id="signupPassword" placeholder="Create a password"
-                            style="padding-left: 45px;" required>
-                    </div>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
-                    <div class="input-group position-relative">
-                        <i class="bi bi-lock position-absolute" style="left: 15px; top: 12px; z-index: 10;"></i>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password"
-                            style="padding-left: 45px;" required>
+                    <div class="form-group mb-3">
+                        <label class="form-label">OTP *</label>
+                        <input type="text" id="otpInput" class="form-control" maxlength="6" required>
                     </div>
 
-                    <div class="password-strength mt-2">
-                        <div class="progress" style="height: 5px;">
-                            <div id="passwordStrengthBar" class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <small class="text-muted" id="strengthText"></small>
-                    </div>
-                </div>
+                    <button type="submit" class="auth-btn w-100" id="verifyOtpBtn" disabled>
+                        Verify OTP
+                    </button>
 
-                <div class="form-group mb-4">
-                    <label class="checkbox-container">
-                        <input type="checkbox" id="termsAgree" required>
-                        <span class="checkmark"><i class="bi bi-check"></i></span>
-                        I agree to the <a href="#" class="text-success">Terms of Service</a> and <a href="#"
-                            class="text-success">Privacy Policy</a>
-                    </label>
-                </div>
+                </form>
+            </div>
 
-                <button type="submit" class="auth-btn w-100" id="signupSubmitBtn">
-                    <span class="btn-text">Create Account</span>
-                    <span class="spinner-border spinner-border-sm ms-2 d-none" id="signupSpinner"></span>
-                </button>
-
-                <div class="auth-footer text-center mt-4">
-                    Already have an account? <a href="index.html" class="text-success text-decoration-none fw-bold">Sign
-                        In</a>
-                </div>
-            </form>
         </div>
     </div>
+
 
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay d-none">

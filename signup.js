@@ -1,6 +1,7 @@
 import SessionManager from "./sessionManager.js";
 
 const session = SessionManager.getInstance();
+let username = "";
 
 // ================= ALERT =================
 function showAlert(message, type, containerId) {
@@ -109,6 +110,17 @@ async function signup(userData) {
         return { success: false, message: error.message };
     }
 }
+async function verifyOtpApi(data) {
+    const response = await fetch('http://localhost:8080/api/public/verify-otp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    return await response.json();
+}
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.getElementById('signupForm');
     const passwordInput = document.getElementById('signupPassword');
@@ -169,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         console.log("sign up clicked");
         const name = document.getElementById('signupName').value.trim();
+        username = document.getElementById('signupEmail').value.trim();
         const email = document.getElementById('signupEmail').value.trim();
         const phone = document.getElementById('signupPhone').value.trim();
         const password = passwordInput.value;
@@ -193,13 +206,73 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.innerHTML = 'Create Account';
 
         if (result.success) {
-            showAlert(result.message, "success", "signupAlert");
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            showAlert("OTP sent to your email", "success", "signupAlert");
+            document.getElementById('signupSection').style.display = "none";
+            document.getElementById('otpSection').style.display = "block";
         } else {
             showAlert(result.message, "danger", "signupAlert");
         }
     });
 })
+
+document.addEventListener('DOMContentLoaded', function () {
+    const otpInput = document.getElementById('otpInput');
+    const otpBtn = document.getElementById('verifyOtpBtn');
+
+    if (otpInput && otpBtn) {
+        otpInput.addEventListener('input', function () {
+
+            const value = this.value.trim();
+            if (value.length === 6 && /^\d{6}$/.test(value)) {
+                otpBtn.disabled = false;
+            } else {
+                otpBtn.disabled = true;
+            }
+
+        });
+    }
+
+    document.getElementById('otpForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const otp = document.getElementById('otpInput').value.trim();
+        if (!otp) {
+            showAlert("Enter OTP", "danger", "otpAlert");
+            return;
+        }
+
+        const verifyBtn = document.getElementById('verifyOtpBtn');
+
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = "Verifying...";
+
+        const result = await verifyOtpApi({
+            username: username,
+            otp: otp
+        });
+        console.log(result);
+
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = "Verify OTP";
+
+        const userData = {
+            userName: result.userName,
+            role: result.role,
+            fullName: result.fullName,
+            token: result.token
+        };
+        if (result.token) {
+            session.login(userData)
+
+            showAlert("OTP Verified Successfully", "success", "otpAlert");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
+
+
+        } else {
+            showAlert(result.error, "danger", "otpAlert");
+        }
+    });
+
+});
