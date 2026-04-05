@@ -208,25 +208,6 @@ body {
     100% { left: 100%; }
 }
 
-/* Severity Indicators */
-.severity-low {
-    width: 33%;
-    background: linear-gradient(90deg, #4caf50, #8bc34a);
-    animation: glow 2s infinite;
-}
-
-.severity-medium {
-    width: 66%;
-    background: linear-gradient(90deg, #ff9800, #ffc107);
-    animation: glow 2s infinite;
-}
-
-.severity-high {
-    width: 100%;
-    background: linear-gradient(90deg, #f44336, #ff5722);
-    animation: glow 2s infinite;
-}
-
 @keyframes glow {
     0%, 100% { filter: brightness(1); }
     50% { filter: brightness(1.2); }
@@ -272,11 +253,7 @@ body {
     padding: 15px;
 }
 
-.table-hover tbody tr:hover {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(255, 143, 0, 0.1));
-    transform: scale(1.01);
-    cursor: pointer;
-}
+
 
 /* Footer */
 footer {
@@ -317,6 +294,9 @@ footer a:hover {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
 }
 
 .btn-success::before {
@@ -341,6 +321,18 @@ footer a:hover {
     background: var(--gradient-5);
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(255, 143, 0, 0.4);
+}
+
+/* Other buttons (excluding .btn-success which is already covered) */
+.btn-outline-success,
+#loginSubmitBtn,
+#requestOtpBtn,
+#verifyOtpBtn,
+#signupSubmitBtn,
+.auth-btn {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
 }
 
 /* Form Controls */
@@ -459,15 +451,141 @@ footer a:hover {
     background: var(--gradient-4);
 }
 
-/* Ensure all buttons are visible */
-.btn-success,
-.btn-outline-success,
-#loginSubmitBtn,
-#requestOtpBtn,
-#verifyOtpBtn,
-#signupSubmitBtn,
-.auth-btn {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: inline-block !important;
+
+
+/* Severity & Table Styles */
+.severity-indicator {
+    width: 100px;
+    height: 20px;
+    margin: 0 auto;   
+    display: flex;              /* ✅ better centering */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.severity-bar {
+    height: 10px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Severity colors (keep ONLY here) */
+.severity-low {
+    width: 33%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+}
+
+.severity-medium {
+    width: 66%;
+    background: linear-gradient(90deg, #ff9800, #ffc107);
+}
+
+.severity-high {
+    width: 100%;
+    background: linear-gradient(90deg, #f44336, #ff5722);
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th, td {
+    word-wrap: break-word;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Column widths */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 12%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 12%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 18%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 15%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+    width: 30%; 
+    white-space: normal;
+}
+
+th:nth-child(6),
+td:nth-child(6) {
+    width: 13%;
+}
+
+/* Row colors */
+.row-low {
+    background-color: rgba(76, 175, 80, 0.08);
+}
+
+.row-medium {
+    background-color: rgba(255, 152, 0, 0.08);
+}
+
+.row-high {
+    background-color: rgba(244, 67, 54, 0.08);
+}
+
+/* Row background (ye hi main color dikhayega) */
+.row-low {
+    background-color: rgba(76, 175, 80, 0.08);
+}
+
+.row-medium {
+    background-color: rgba(255, 152, 0, 0.08);
+}
+
+.row-high {
+    background-color: rgba(244, 67, 54, 0.08);
+}
+
+/* IMPORTANT: td ko transparent karo WITHOUT !important */
+.table tbody td {
+    background-color: transparent;
+}
+
+/* Card */
+.history-card {
+    padding: 0;
+    overflow: hidden;
+}
+.history-card:hover {
+    transform: none !important;
+    box-shadow: var(--box-shadow); /* optional */
+}
+
+/* Scroll (5 rows approx) */
+.history-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Sticky header */
+.history-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* Table layout */
+.history-table {
+    width: 100%;
+    table-layout: fixed;
 }

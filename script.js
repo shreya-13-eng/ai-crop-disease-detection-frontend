@@ -228,6 +228,7 @@ scanBtn?.addEventListener("click", async () => {
 });
 
 function fillDetectionResults(data) {
+    loadHistory()
     const resultsSection = document.getElementById("resultsSection");
     resultsSection.classList.remove("d-none");
 
@@ -240,15 +241,15 @@ function fillDetectionResults(data) {
     confidenceBar.style.width = data.confidence + "%";
     confidenceBar.innerText = data.confidence + "%";
 
-   
-    let color = "#dc3545"; 
-    if (data.confidence >= 80) color = "#28a745";  
+
+    let color = "#dc3545";
+    if (data.confidence >= 80) color = "#28a745";
     else if (data.confidence >= 50) color = "#ffc107";
 
     confidenceBar.style.backgroundColor = color;
 
     const treatmentCard = document.querySelector(".treatment-card");
-    treatmentCard.innerHTML = `<h4 class="mb-4">Recommended Treatments</h4>`; 
+    treatmentCard.innerHTML = `<h4 class="mb-4">Recommended Treatments</h4>`;
     data.treatments.forEach(t => {
         const div = document.createElement("div");
         div.classList.add("mb-4");
@@ -275,3 +276,101 @@ updateUserNavigation();
 // global access
 window.updateUIForLoginStatus = updateUIForLoginStatus;
 window.updateUserNavigation = updateUserNavigation;
+
+
+async function loadHistory() {
+    const table = document.getElementById("historyTable");
+
+    // 1. Not logged in
+    if (!session.isLoggedIn()) {
+        table.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; padding:20px;">
+                    Login to see scan history
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:8080/scan-results", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + session.getToken(),
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await res.json();
+
+        // 2. Empty data check (YAHI hona chahiye tha)
+        if (!data || data.length === 0) {
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align:center; padding:20px;">
+                        No scan history available
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        // 3. Render data
+        renderHistory(data);
+
+    } catch (error) {
+        console.error(error);
+        table.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; padding:20px; color:red;">
+                    Failed to load history
+                </td>
+            </tr>
+        `;
+    }
+}
+
+function renderHistory(scans) {
+    const table = document.getElementById("historyTable");
+    table.innerHTML = "";
+
+    scans.forEach(scan => {
+        const row = document.createElement("tr");
+
+        const severity = (scan.severity || "").toLowerCase();
+
+        let barClass = "";
+        let rowClass = "";
+
+        if (severity === "high") {
+            barClass = "severity-high";
+            rowClass = "row-high";
+        } else if (severity === "medium") {
+            barClass = "severity-medium";
+            rowClass = "row-medium";
+        } else {
+            barClass = "severity-low";
+            rowClass = "row-low";
+        }
+
+        row.innerHTML = `
+            <td>${new Date(scan.scanTime).toLocaleDateString()}</td>
+            <td>${scan.crop || "N/A"}</td>
+            <td>${scan.detectedDiseases?.join(", ") || "N/A"}</td>
+            <td>
+                <div class="severity-indicator">
+                    <div class="severity-bar ${barClass}"></div>
+                </div>
+            </td>
+            <td>${scan.recommendedTreatment?.join(", ") || "N/A"}</td>
+            <td>${scan.confidenceScore ? scan.confidenceScore.toFixed(2) : "0.00"}%</td>
+        `;
+
+        row.classList.add(rowClass);
+        table.appendChild(row);
+    });
+}
+
+// Always call on load
+window.addEventListener("load", loadHistory);

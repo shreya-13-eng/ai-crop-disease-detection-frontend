@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="auth.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
@@ -38,7 +40,8 @@
                     </li>
                 </ul>
                 <div id="userStatus">
-                    <button class="btn btn-outline-light ms-lg-3 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal" id="loginNavBtn">
+                    <button class="btn btn-outline-light ms-lg-3 mt-2 mt-lg-0" data-bs-toggle="modal"
+                        data-bs-target="#loginModal" id="loginNavBtn">
                         <i class="bi bi-person-circle me-1"></i> Farmer Login
                     </button>
                     <div id="userInfo" class="d-none ms-lg-3">
@@ -56,7 +59,8 @@
     <section id="home" class="home-section">
         <div class="container text-center">
             <h1 class="display-4 fw-bold mb-4">AI-Powered Crop Disease Detection</h1>
-            <p class="lead mb-4">Take a photo of your crop, detect diseases instantly, and get recommended treatments to minimize crop damage.</p>
+            <p class="lead mb-4">Take a photo of your crop, detect diseases instantly, and get recommended treatments to
+                minimize crop damage.</p>
             <a href="#scan" class="btn btn-success btn-lg px-4">
                 <i class="bi bi-camera me-2"></i> Scan Your Crop Now
             </a>
@@ -79,7 +83,8 @@
                             <i class="bi bi-camera"></i>
                         </div>
                         <h4>1. Capture Photo</h4>
-                        <p>Take a clear photo of the affected plant part (leaf, stem, fruit) using your smartphone camera.</p>
+                        <p>Take a clear photo of the affected plant part (leaf, stem, fruit) using your smartphone
+                            camera.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -88,7 +93,8 @@
                             <i class="bi bi-cpu"></i>
                         </div>
                         <h4>2. AI Detection</h4>
-                        <p>Our advanced AI analyzes the image and identifies the disease with 95% accuracy in seconds.</p>
+                        <p>Our advanced AI analyzes the image and identifies the disease with 95% accuracy in seconds.
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -97,7 +103,8 @@
                             <i class="bi bi-prescription2"></i>
                         </div>
                         <h4>3. Get Treatment</h4>
-                        <p>Receive tailored treatment recommendations including organic solutions, pesticides, and prevention tips.</p>
+                        <p>Receive tailored treatment recommendations including organic solutions, pesticides, and
+                            prevention tips.</p>
                     </div>
                 </div>
             </div>
@@ -108,228 +115,210 @@
     <section id="scan" class="py-5 bg-light">
         <div class="container">
             <div class="row align-items-start"">
-                <div class="col-md-8 mx-auto text-center">
-                    <h2 class="fw-bold mb-3">Crop Disease Scanner</h2>
-                    <p class="text-muted">Upload a photo of your crop to detect diseases and get treatment recommendations</p>
-                </div>
+                <div class=" col-md-8 mx-auto text-center">
+                <h2 class="fw-bold mb-3">Crop Disease Scanner</h2>
+                <p class="text-muted">Upload a photo of your crop to detect diseases and get treatment recommendations
+                </p>
             </div>
-            
-            <div class="row align-items-start"">
-                <div class="col-lg-6 mb-4">
-                    <div class="card p-4 h-100">
-                        <h4 class="mb-4">Upload Crop Image</h4>
-                        
-                        <div id="uploadArea" class="upload-area mb-4">
-                            <i class="bi bi-cloud-arrow-up display-4 text-muted mb-3"></i>
-                            <h5>Drag & Drop or Click to Upload</h5>
-                            <p class="text-muted">Supported formats: JPG, PNG, WebP</p>
-                            <input type="file" id="imageInput" accept="image/*" class="d-none">
-                            <button id="uploadBtn" class="btn btn-success mt-2" disabled>
-                                <i class="bi bi-upload me-2"></i> Select Image
-                            </button>
-                            <div id="loginRequiredMsg" class="text-danger mt-2">
-                                <i class="bi bi-exclamation-triangle"></i> Please login to upload images
+        </div>
+
+        <div class="row align-items-start"">
+                <div class=" col-lg-6 mb-4">
+            <div class="card p-4 h-100">
+                <h4 class="mb-4">Upload Crop Image</h4>
+
+                <div id="uploadArea" class="upload-area mb-4">
+                    <i class="bi bi-cloud-arrow-up display-4 text-muted mb-3"></i>
+                    <h5>Drag & Drop or Click to Upload</h5>
+                    <p class="text-muted">Supported formats: JPG, PNG, WebP</p>
+                    <input type="file" id="imageInput" accept="image/*" class="d-none">
+                    <button id="uploadBtn" class="btn btn-success mt-2" disabled>
+                        <i class="bi bi-upload me-2"></i> Select Image
+                    </button>
+                    <div id="loginRequiredMsg" class="text-danger mt-2">
+                        <i class="bi bi-exclamation-triangle"></i> Please login to upload images
+                    </div>
+                </div>
+
+                <div id="imagePreview" class="text-center mb-4 d-none">
+                    <img id="previewImg" class="preview-image mb-3" src="" alt="Preview">
+                    <button id="removeImage" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash me-1"></i> Remove Image
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <label for="cropType" class="form-label">Crop Type</label>
+                    <select class="form-select" id="cropType" disabled>
+                        <option value="">Select Crop Type</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="potato">Potato</option>
+                        <option value="rice">Rice</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="corn">Corn</option>
+                        <option value="apple">Apple</option>
+                        <option value="grape">Grape</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="growthStage" class="form-label">Growth Stage</label>
+                    <select class="form-select" id="growthStage" disabled>
+                        <option value="">Select Growth Stage</option>
+                        <option value="seedling">Seedling</option>
+                        <option value="vegetative">Vegetative</option>
+                        <option value="flowering">Flowering</option>
+                        <option value="fruiting">Fruiting</option>
+                        <option value="mature">Mature</option>
+                    </select>
+                </div>
+
+                <button id="scanBtn" class="btn btn-success w-100 py-3" disabled>
+                    <i class="bi bi-search me-2"></i> Scan for Diseases
+                    <span id="scanningSpinner" class="spinner-border spinner-border-sm ms-2 d-none"
+                        role="status"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div id="resultsSection" class="d-none">
+                <div class="card p-4 mb-4">
+                    <h4 class="mb-4">Detection Results</h4>
+
+                    <div class="mb-4">
+                        <h5 id="diseaseName" class="text-success">Tomato Late Blight</h5>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-3">Confidence:</span>
+                            <div class="progress flex-grow-1">
+                                <div id="confidenceBar" class="progress-bar" role="progressbar" style="width: 94%">94%
+                                </div>
                             </div>
                         </div>
-                        
-                        <div id="imagePreview" class="text-center mb-4 d-none">
-                            <img id="previewImg" class="preview-image mb-3" src="" alt="Preview">
-                            <button id="removeImage" class="btn btn-outline-danger btn-sm">
-                                <i class="bi bi-trash me-1"></i> Remove Image
-                            </button>
+
+                        <div class="mb-3">
+                            <span class="me-3">Severity:</span>
+                            <div class="severity-indicator d-inline-block" style="width: 200px;">
+                                <div id="severityBar" class="severity-bar severity-medium"></div>
+                            </div>
+                            <span id="severityText" class="ms-2">Medium</span>
                         </div>
-                        
-                        <div class="mb-4">
-                            <label for="cropType" class="form-label">Crop Type</label>
-                            <select class="form-select" id="cropType" disabled>
-                                <option value="">Select Crop Type</option>
-                                <option value="tomato">Tomato</option>
-                                <option value="potato">Potato</option>
-                                <option value="rice">Rice</option>
-                                <option value="wheat">Wheat</option>
-                                <option value="corn">Corn</option>
-                                <option value="apple">Apple</option>
-                                <option value="grape">Grape</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="growthStage" class="form-label">Growth Stage</label>
-                            <select class="form-select" id="growthStage" disabled>
-                                <option value="">Select Growth Stage</option>
-                                <option value="seedling">Seedling</option>
-                                <option value="vegetative">Vegetative</option>
-                                <option value="flowering">Flowering</option>
-                                <option value="fruiting">Fruiting</option>
-                                <option value="mature">Mature</option>
-                            </select>
-                        </div>
-                        
-                        <button id="scanBtn" class="btn btn-success w-100 py-3" disabled>
-                            <i class="bi bi-search me-2"></i> Scan for Diseases
-                            <span id="scanningSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+
+                        <p id="diseaseDescription" class="text-muted">
+                            Late blight is a serious fungal disease that affects tomatoes and potatoes. It spreads
+                            rapidly in cool, wet conditions and can destroy entire crops if not treated promptly.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Important:</strong> This is an AI-based diagnosis. For critical infections, consult with
+                        local agricultural experts for confirmation.
+                    </div>
+                </div>
+
+                <div class="card treatment-card p-4">
+                    <h4 class="mb-4">Recommended Treatments</h4>
+
+                    <div class="mb-4">
+                        <h6><span class="badge chemical-badge me-2">Chemical</span> Fungicide Application</h6>
+                        <p>Apply copper-based fungicide (e.g., copper oxychloride) at 2g per liter of water. Spray every
+                            7-10 days until conditions dry.</p>
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply immediately, reapply after
+                            rain</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6><span class="badge organic-badge me-2">Organic Solution</span> Baking Soda Spray</h6>
+                        <p>Mix 1 tablespoon baking soda, 1 teaspoon vegetable oil, and a few drops of dish soap in 1
+                            liter of water. Spray on affected plants.</p>
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply every 5-7 days</small>
+                    </div>
+
+                    <div>
+                        <h6><span class="badge prevention-badge me-2">Prevention</span> Cultural Practices</h6>
+                        <ul>
+                            <li>Ensure proper spacing between plants for air circulation</li>
+                            <li>Water at the base, avoid wetting leaves</li>
+                            <li>Remove and destroy infected plant parts</li>
+                            <li>Rotate crops next season</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <button class="btn btn-outline-success me-2">
+                            <i class="bi bi-download me-1"></i> Save Report
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="bi bi-geo-alt me-1"></i> Find Suppliers Nearby
                         </button>
                     </div>
                 </div>
-                
-                <div class="col-lg-6">
-                    <div id="resultsSection" class="d-none">
-                        <div class="card p-4 mb-4">
-                            <h4 class="mb-4">Detection Results</h4>
-                            
-                            <div class="mb-4">
-                                <h5 id="diseaseName" class="text-success">Tomato Late Blight</h5>
-                                <div class="d-flex align-items-center mb-2">
-                                    <span class="me-3">Confidence:</span>
-                                    <div class="progress flex-grow-1">
-                                        <div id="confidenceBar" class="progress-bar" role="progressbar" style="width: 94%">94%</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <span class="me-3">Severity:</span>
-                                    <div class="severity-indicator d-inline-block" style="width: 200px;">
-                                        <div id="severityBar" class="severity-bar severity-medium"></div>
-                                    </div>
-                                    <span id="severityText" class="ms-2">Medium</span>
-                                </div>
-                                
-                                <p id="diseaseDescription" class="text-muted">
-                                    Late blight is a serious fungal disease that affects tomatoes and potatoes. It spreads rapidly in cool, wet conditions and can destroy entire crops if not treated promptly.
-                                </p>
-                            </div>
-                            
-                            <div class="alert alert-warning">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                <strong>Important:</strong> This is an AI-based diagnosis. For critical infections, consult with local agricultural experts for confirmation.
-                            </div>
-                        </div>
-                        
-                        <div class="card treatment-card p-4">
-                            <h4 class="mb-4">Recommended Treatments</h4>
-                            
-                            <div class="mb-4">
-                                <h6><span class="badge chemical-badge me-2">Chemical</span> Fungicide Application</h6>
-                                <p>Apply copper-based fungicide (e.g., copper oxychloride) at 2g per liter of water. Spray every 7-10 days until conditions dry.</p>
-                                <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply immediately, reapply after rain</small>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6><span class="badge organic-badge me-2">Organic Solution</span> Baking Soda Spray</h6>
-                                <p>Mix 1 tablespoon baking soda, 1 teaspoon vegetable oil, and a few drops of dish soap in 1 liter of water. Spray on affected plants.</p>
-                                <small class="text-muted"><i class="bi bi-clock me-1"></i> Apply every 5-7 days</small>
-                            </div>
-                            
-                            <div>
-                                <h6><span class="badge prevention-badge me-2">Prevention</span> Cultural Practices</h6>
-                                <ul>
-                                    <li>Ensure proper spacing between plants for air circulation</li>
-                                    <li>Water at the base, avoid wetting leaves</li>
-                                    <li>Remove and destroy infected plant parts</li>
-                                    <li>Rotate crops next season</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="mt-4">
-                                <button class="btn btn-outline-success me-2">
-                                    <i class="bi bi-download me-1"></i> Save Report
-                                </button>
-                                <button class="btn btn-success">
-                                    <i class="bi bi-geo-alt me-1"></i> Find Suppliers Nearby
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="instructionsSection" class="card p-4">
-                        <h4 class="mb-3">Tips for Best Results</h4>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take photo in good natural light</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Focus on affected leaves/stems/fruits</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Include both healthy and diseased parts if possible</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take multiple photos from different angles</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Avoid blurry or shadowed images</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
+
+            <div id="instructionsSection" class="card p-4">
+                <h4 class="mb-3">Tips for Best Results</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take photo in good
+                        natural light</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Focus on affected
+                        leaves/stems/fruits</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Include both healthy and
+                        diseased parts if possible</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Take multiple photos from
+                        different angles</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i> Avoid blurry or shadowed images</li>
+                </ul>
+            </div>
+        </div>
+        </div>
         </div>
     </section>
 
-    <!-- Scan History -->
+
     <section id="history" class="py-5">
-        <div class="container">
+        <div class="container"> <!-- ye hi width control karega -->
+
+            <!-- Heading -->
             <div class="row mb-5">
                 <div class="col-md-8 mx-auto text-center">
                     <h2 class="fw-bold mb-3">Previous Scans</h2>
                     <p class="text-muted">View your crop disease detection history</p>
                 </div>
             </div>
-            
+
+            <!-- Table -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card p-4">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
+
+                    <!-- Light card (padding reduce kiya) -->
+                    <div class="card history-card">
+
+                        <div class="table-responsive history-scroll">
+                            <table class="table table-hover history-table mb-0">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
                                         <th>Crop</th>
                                         <th>Disease Detected</th>
                                         <th>Severity</th>
-                                        <th>Treatment Applied</th>
-                                        <th>Status</th>
+                                        <th>Recommended Treatment</th>
+                                        <th>Confidence Score</th>
                                     </tr>
                                 </thead>
-                                <tbody id="historyTable">
-                                    <tr>
-                                        <td>May 15, 2023</td>
-                                        <td>Tomato</td>
-                                        <td>Early Blight</td>
-                                        <td>
-                                            <div class="severity-indicator" style="width: 100px;">
-                                                <div class="severity-bar severity-low"></div>
-                                            </div>
-                                        </td>
-                                        <td>Copper Fungicide</td>
-                                        <td><span class="badge bg-success">Resolved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>April 28, 2023</td>
-                                        <td>Rice</td>
-                                        <td>Rice Blast</td>
-                                        <td>
-                                            <div class="severity-indicator" style="width: 100px;">
-                                                <div class="severity-bar severity-medium"></div>
-                                            </div>
-                                        </td>
-                                        <td>Tricyclazole</td>
-                                        <td><span class="badge bg-warning">Improving</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>April 10, 2023</td>
-                                        <td>Apple</td>
-                                        <td>Apple Scab</td>
-                                        <td>
-                                            <div class="severity-indicator" style="width: 100px;">
-                                                <div class="severity-bar severity-high"></div>
-                                            </div>
-                                        </td>
-                                        <td>Pruning + Fungicide</td>
-                                        <td><span class="badge bg-danger">Critical</span></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="historyTable"></tbody>
                             </table>
                         </div>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-outline-success">View Full History</button>
-                        </div>
+
                     </div>
+
                 </div>
             </div>
+
         </div>
     </section>
+
 
     <!-- About Section -->
     <section id="about" class="py-5 bg-light">
@@ -337,8 +326,10 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <h2 class="fw-bold mb-4">About AgriScan AI</h2>
-                    <p class="mb-4">AgriScan AI is an innovative platform that combines artificial intelligence with agricultural expertise to help farmers protect their crops from diseases.</p>
-                    <p class="mb-4">Our system can identify over 50 common crop diseases with 95% accuracy, providing instant treatment recommendations to minimize crop damage and maximize yields.</p>
+                    <p class="mb-4">AgriScan AI is an innovative platform that combines artificial intelligence with
+                        agricultural expertise to help farmers protect their crops from diseases.</p>
+                    <p class="mb-4">Our system can identify over 50 common crop diseases with 95% accuracy, providing
+                        instant treatment recommendations to minimize crop damage and maximize yields.</p>
                     <div class="d-flex">
                         <div class="me-4">
                             <h3 class="text-success fw-bold">50+</h3>
@@ -383,7 +374,8 @@
                                 <i class="bi bi-check-circle-fill text-success me-2"></i> Citrus
                             </div>
                         </div>
-                        <p class="text-muted mt-3">More crops being added regularly based on farmer feedback and regional requirements.</p>
+                        <p class="text-muted mt-3">More crops being added regularly based on farmer feedback and
+                            regional requirements.</p>
                     </div>
                 </div>
             </div>
@@ -398,35 +390,40 @@
                     <h5 class="modal-title" id="loginModalLabel">
                         <i class="bi bi-person-circle me-2"></i>Farmer Login
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="loginAlert"></div>
-                    
+
                     <ul class="nav nav-tabs mb-4" id="loginTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="password-tab" data-bs-toggle="tab" data-bs-target="#passwordLogin" type="button" role="tab">
+                            <button class="nav-link active" id="password-tab" data-bs-toggle="tab"
+                                data-bs-target="#passwordLogin" type="button" role="tab">
                                 <i class="bi bi-key me-1"></i>Password
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="otp-tab" data-bs-toggle="tab" data-bs-target="#otpLogin" type="button" role="tab">
+                            <button class="nav-link" id="otp-tab" data-bs-toggle="tab" data-bs-target="#otpLogin"
+                                type="button" role="tab">
                                 <i class="bi bi-phone me-1"></i>OTP Login
                             </button>
                         </li>
                     </ul>
-                    
+
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="passwordLogin" role="tabpanel">
                             <form id="loginForm">
                                 <div class="mb-3">
                                     <label for="loginEmail" class="form-label">Email or Phone Number</label>
-                                    <input type="text" class="form-control" id="loginEmail" placeholder="Enter email or phone" required>
+                                    <input type="text" class="form-control" id="loginEmail"
+                                        placeholder="Enter email or phone" required>
                                 </div>
                                 <div class="mb-3">
-                                     <label for="loginPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
-                                  </div>
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword"
+                                        placeholder="Enter password" required>
+                                </div>
 
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe">
@@ -438,27 +435,30 @@
                                 </button>
                             </form>
                             <div class="text-center mt-3">
-                                <a href="#" class="text-decoration-none text-success" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">Forgot password?</a>
+                                <a href="#" class="text-decoration-none text-success" data-bs-toggle="modal"
+                                    data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">Forgot password?</a>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="otpLogin" role="tabpanel">
                             <form id="otpLoginRequestForm">
                                 <div class="mb-3">
                                     <label for="otpPhoneNumber" class="form-label">Phone Number</label>
                                     <div class="input-group">
                                         <span class="input-group-text">+91</span>
-                                        <input type="tel" class="form-control" id="otpPhoneNumber" placeholder="Enter 10-digit mobile number" maxlength="10" required>
+                                        <input type="tel" class="form-control" id="otpPhoneNumber"
+                                            placeholder="Enter 10-digit mobile number" maxlength="10" required>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success w-100" id="requestOtpBtn">
                                     <span class="btn-text">Send OTP</span>
-                                    <span class="spinner-border spinner-border-sm ms-2 d-none" id="requestOtpSpinner"></span>
+                                    <span class="spinner-border spinner-border-sm ms-2 d-none"
+                                        id="requestOtpSpinner"></span>
                                 </button>
                             </form>
                         </div>
                     </div>
-                    
+
                     <hr class="my-4">
                     <div class="text-center">
                         <p class="mb-2">Don't have an account?</p>
@@ -479,7 +479,8 @@
                     <h5 class="modal-title" id="otpModalLabel">
                         <i class="bi bi-phone me-2"></i>OTP Verification
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="otpAlert"></div>
@@ -487,7 +488,9 @@
                     <form id="otpForm">
                         <div class="mb-3">
                             <label for="otpCode" class="form-label">Enter OTP</label>
-                            <input type="text" class="form-control text-center" id="otpCode" placeholder="Enter 6-digit OTP" maxlength="6" style="font-size: 1.5rem; letter-spacing: 5px;" required>
+                            <input type="text" class="form-control text-center" id="otpCode"
+                                placeholder="Enter 6-digit OTP" maxlength="6"
+                                style="font-size: 1.5rem; letter-spacing: 5px;" required>
                         </div>
                         <div id="otpTimer" class="text-center mb-3">
                             <small class="text-muted">Resend OTP in <span id="timerSeconds">30</span> seconds</small>
@@ -515,16 +518,19 @@
                 </div>
                 <div class="modal-body">
                     <div id="forgotAlert"></div>
-                    <p class="text-muted mb-4">Enter your email or phone number to receive password reset instructions.</p>
+                    <p class="text-muted mb-4">Enter your email or phone number to receive password reset instructions.
+                    </p>
                     <form id="forgotPasswordForm">
                         <div class="mb-4">
                             <label for="resetEmail" class="form-label">Email or Phone Number</label>
-                            <input type="text" class="form-control" id="resetEmail" placeholder="Enter email or phone" required>
+                            <input type="text" class="form-control" id="resetEmail" placeholder="Enter email or phone"
+                                required>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Send Reset Link</button>
                     </form>
                     <div class="text-center mt-3">
-                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Back to Login</a>
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal"
+                            data-bs-dismiss="modal">Back to Login</a>
                     </div>
                 </div>
             </div>
@@ -548,7 +554,8 @@
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h4 class="fw-bold mb-4"><i class="bi bi-tree-fill me-2"></i>AgriScan AI</h4>
-                    <p>Empowering farmers with AI-powered crop disease detection and treatment recommendations to minimize crop damage and maximize yields.</p>
+                    <p>Empowering farmers with AI-powered crop disease detection and treatment recommendations to
+                        minimize crop damage and maximize yields.</p>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
                     <h5 class="mb-4">Quick Links</h5>
@@ -584,7 +591,9 @@
             </div>
             <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
             <div class="text-center">
-                <p class="mb-0">© 2023 AgriScan AI. All rights reserved. | <a href="#" class="text-white text-decoration-none">Privacy Policy</a> | <a href="#" class="text-white text-decoration-none">Terms of Service</a></p>
+                <p class="mb-0">© 2023 AgriScan AI. All rights reserved. | <a href="#"
+                        class="text-white text-decoration-none">Privacy Policy</a> | <a href="#"
+                        class="text-white text-decoration-none">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -594,4 +603,5 @@
     <script type="module" src="auth.js"></script>
     <script type="module" src="script.js"></script>
 </body>
+
 </html>
