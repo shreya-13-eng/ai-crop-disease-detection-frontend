@@ -35,7 +35,7 @@ function validatePhone(phone) {
 // ================= LOGIN API =================
 async function login(emailOrPhone, password) {
     try {
-        const response = await fetch("http://localhost:8080/api/public/auth/login", {
+        const response = await fetch("/api/public/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -68,7 +68,7 @@ async function login(emailOrPhone, password) {
 // ================= SIGNUP API =================
 async function signup(userData) {
     try {
-        const response = await fetch("http://localhost:8080/api/public/sign-up", {
+        const response = await fetch("/api/public/sign-up", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -79,7 +79,7 @@ function validateForm() {
 
 async function signup(userData) {
     try {
-        const response = await fetch("http://localhost:8080/api/public/sign-up", {
+        const response = await fetch("/api/public/sign-up", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -111,7 +111,7 @@ async function signup(userData) {
     }
 }
 async function verifyOtpApi(data) {
-    const response = await fetch('http://localhost:8080/api/public/verify-otp', {
+    const response = await fetch('/api/public/verify-otp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

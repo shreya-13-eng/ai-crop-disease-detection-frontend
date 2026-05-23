@@ -197,7 +197,7 @@ scanBtn?.addEventListener("click", async () => {
     formData.append("cropType", cropType);
     formData.append("growthStage", growthStage);
 
-    const request = new Request("http://localhost:8080/predict", {
+    const request = new Request("/predict", {
         method: "POST",
         headers: {
             "Authorization": "Bearer " + session.getToken(),
@@ -294,7 +294,7 @@ async function loadHistory() {
     }
 
     try {
-        const res = await fetch("http://localhost:8080/scan-results", {
+        const res = await fetch("/scan-results", {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + session.getToken(),
