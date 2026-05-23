@@ -1,4 +1,4 @@
-import SessionManager from "./sessionManager.js";
+import SessionManager from "./SessionManager.js";
 
 const session = SessionManager.getInstance();
 let username = "";
